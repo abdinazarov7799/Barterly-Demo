@@ -3,10 +3,28 @@ import ReactDOM from 'react-dom/client';
 import  'bootstrap/dist/css/bootstrap.css' ;
 import './index.css';
 import App from "./Layouts/App";
+import {createBrowserRouter} from "react-router-dom";
+import {RouterProvider} from "react-router";
+import ErrorPage from "./components/errorPage/ErrorPage";
+import AddItems from "./Layouts/AddItems";
 
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />
+    },
+    {
+        path: "addItems",
+        element: <AddItems />,
+    },
+    {
+        path: "*",
+        element: <ErrorPage />,
+    },
+]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   <App />
+      <RouterProvider router={router} />
   </React.StrictMode>
 );

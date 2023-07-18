@@ -3,6 +3,7 @@ import {Dropdown, Space} from "antd";
 import {DownOutlined, MenuOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import "./Navbar.css";
+import {Link} from "react-router-dom";
 
 function NavbarMenu() {
     const [collapsed, setCollapsed] = useState(true);
@@ -68,9 +69,11 @@ function NavbarMenu() {
                         <Col md={5}>
                             <div className="right-menu">
                                 <NavLink className="nav-text" href="#">Sign Up or Sign in</NavLink>
-                                <button>
-                                    Place Your Ad
-                                </button>
+                                <Link to='addItems'>
+                                    <button>
+                                        Place Your Ad
+                                    </button>
+                                </Link>
                             </div>
                         </Col>
                         <Collapse isOpen={!collapsed} navbar>

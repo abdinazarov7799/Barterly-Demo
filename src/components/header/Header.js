@@ -5,6 +5,7 @@ import {DownOutlined, HeartOutlined, PushpinOutlined} from "@ant-design/icons";
 import LogoDefoult from '../../assets/logos/logo-barterly@3000px 1.svg';
 import React, {useEffect, useState} from "react";
 import getCategories from "../fetchData/getCategories";
+import {Link} from "react-router-dom";
 
 
 function Header() {
@@ -18,8 +19,11 @@ function Header() {
                 <Container>
                     <Row className="align-items-center justify-content-between">
                         <Col xs={6} md={6} lg={2} className="me-md-4">
-                            <img src={LogoDefoult} alt="logo" style={{width: "177px", height: "50px"}}/>
+                            <Link to='/'>
+                                <img src={LogoDefoult} alt="logo" style={{width: "177px", height: "50px"}}/>
+                            </Link>
                         </Col>
+
                         <Col xs={6} md={3} className="d-flex justify-content-end align-content-center d-lg-none">
                             <div style={{
                                 display: "flex",

@@ -4,6 +4,7 @@ import Header from "../components/header/Header";
 import Banner from "../components/banner/Banner";
 import Categories from "../components/categories/Categories";
 import HeroMenu from "../components/hero-menu/HeroMenu";
+import Footer from "../components/footer/Footer";
 
 class App extends Component {
     render() {
@@ -14,6 +15,7 @@ class App extends Component {
                 <Banner />
                 <Categories />
                 <HeroMenu />
+                <Footer />
             </>
         );
     }
