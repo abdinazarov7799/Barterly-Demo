@@ -1,0 +1,58 @@
+#header{
+    margin: 19px 0;
+    display: flex;
+    align-items: center;
+}
+#selectBtn{
+    width: 170px;
+    height: 43px;
+    background-color: #0A6FB7;
+    color: #ffffff;
+}
+#selectBtn:hover{
+    border: none;
+}
+#header-input input{
+    padding: 9px 12px;
+}
+#header-input input:focus{
+    border: 1px solid transparent;
+    box-shadow: 0 0 5px #0A6FB7;
+}
+#header-input button{
+    font-family: 'Roboto';
+    padding: 9px 16px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #141414;
+    color: #ffffff;
+}
+.ant-space-item span{
+    vertical-align: 0!important;
+}
+@media (min-width: 454px) {
+    #icons{
+        display: none!important;
+    }
+    .d-sm-none.d-md-flex{
+        display: none;
+    }
+    #selectBtn{
+        margin: .5rem 0;
+        width: 100%;
+    }
+    .input-col, #header-input{
+        padding-right: 0;
+    }
+}
+@media (min-width: 576px) {
+    #selectBtn{
+        width: 170px;
+    }
+}
+@media (min-width: 992px) {
+    #icons{
+        display: flex!important;
+    }
+}
