@@ -39,7 +39,7 @@ function NavbarMenu() {
                             margin: 0
                         }}>
                         <button onClick={toggleNavbar} className="nav-togle-btn d-md-none"><MenuOutlined/></button>
-                        <Nav className="d-sm-none d-md-flex">
+                        <Nav className="d-md-flex" id='nav-one'>
                             <NavItem>
                                 <NavLink className="nav-text ps-0" href="#">Vacancies</NavLink>
                             </NavItem>

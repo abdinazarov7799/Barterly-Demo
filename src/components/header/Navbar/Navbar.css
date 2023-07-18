@@ -46,3 +46,12 @@
 #navbar .container-fluid{
     padding: 0;
 }
+
+@media (min-width: 50px) {
+    #nav-one{
+        display: none;
+    }
+}
+@media (min-width: 576px) {
+
+}

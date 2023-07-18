@@ -31,7 +31,7 @@
 .ant-space-item span{
     vertical-align: 0!important;
 }
-@media (min-width: 454px) {
+@media (min-width: 50px) {
     #icons{
         display: none!important;
     }
