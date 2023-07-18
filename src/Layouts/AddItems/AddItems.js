@@ -184,9 +184,7 @@ function AddItems() {
                             <button className={classes.CoastButton}>Estimate the value!</button>
                         </Col>
                     </Col>
-                    <Col md={6}>
-
-                    </Col>
+                    <Col md={6}></Col>
                 </Row>
             </Container>
 
