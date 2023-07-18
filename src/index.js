@@ -6,7 +6,7 @@ import App from "./Layouts/App";
 import {createBrowserRouter} from "react-router-dom";
 import {RouterProvider} from "react-router";
 import ErrorPage from "./components/errorPage/ErrorPage";
-import AddItems from "./Layouts/AddItems";
+import AddItems from "./Layouts/AddItems/AddItems";
 
 const router = createBrowserRouter([
     {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         element: <App />
     },
     {
-        path: "addItems",
+        path: "/addItems",
         element: <AddItems />,
     },
     {
