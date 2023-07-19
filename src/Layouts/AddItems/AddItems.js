@@ -3,7 +3,7 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
-import {Cascader, Upload, message, Button} from "antd";
+import {Cascader, Upload, message, Button, Input} from "antd";
 import React, {useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -18,6 +18,28 @@ const options = [
         value: 'jiangsu',
         label: 'Jiangsu',
     },
+];
+const itemYear = [];
+for (let i=2023; i>=2000 ; i--){
+    itemYear.push(
+        {
+            value: `${i}`,
+            label: `${i}`,
+        })
+}
+const selectWant =[
+    {
+        value: 'upgrade',
+        label: 'Upgrade my item',
+    },
+    {
+        value: 'above',
+        label: 'Money above item',
+    },
+    {
+        value: 'straight',
+        label: 'Straight barter',
+    }
 ];
 const onChange = (value) => {
     console.log(value);
@@ -81,7 +103,6 @@ function AddItems() {
             if (e.target.innerHTML !== coastButton){
                 e.target.parentElement.setAttribute('style' ,"background: #007505")
             }
-
         }, 2000);
     }
     return (
@@ -107,7 +128,7 @@ function AddItems() {
                         <p className={classes.InputTitle}><span>*</span> Please add short description of your item:
                             (e.g.
                             Honda Accord 2013 for bartering)</p>
-                        <Cascader className="w-100" options={options} onChange={onChange}
+                        <Input className="w-100" onChange={onChange}
                                   placeholder="Honda Accord 2013 for bartering"/>
                         <p className={classes.InputText}>Please add short description of your item</p>
                     </Col>
@@ -115,12 +136,12 @@ function AddItems() {
                         <Row>
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> Input the year of your car</p>
-                                <Cascader className="w-100" options={options} onChange={onChange} placeholder="2011"/>
+                                <Cascader className="w-100" options={itemYear} onChange={onChange} placeholder="2011"/>
                                 <p className={classes.InputText}>Please enter the year of your car</p>
                             </Col>
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> Input the milage of your car (km)</p>
-                                <Cascader className="w-100" options={options} onChange={onChange}
+                                <Input className="w-100" onChange={onChange}
                                           placeholder="198,000"/>
                                 <p className={classes.InputText}>Please enter the milage of your car</p>
                             </Col>
@@ -217,23 +238,28 @@ function AddItems() {
                         <Row className="flex-wrap justify-content-end">
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> Select what you want</p>
-                                <Cascader className="w-100" options={options} onChange={onChange}
+                                <Cascader className="w-100 h-auto" options={selectWant} onChange={onChange}
                                           placeholder="Select"/>
                                 <p className={classes.InputText}>Please select what do you want: Compensation in barter or upgrade item?</p>
                             </Col>
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> How much can you pay for upgrade?</p>
-                                <Cascader className="w-100" options={options} onChange={onChange}
+                                <Input className="w-100" options={options} onChange={onChange}
                                           placeholder="198,000"/>
                                 <p className={classes.InputText}>Please enter the amount of money in AED</p>
                             </Col>
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> How much do you want above item?</p>
-                                <Cascader className="w-100" options={options} onChange={onChange}
+                                <Input className="w-100" options={options} onChange={onChange}
                                           placeholder="198,000"/>
                                 <p className={classes.InputText}>Please enter the amount of money in AED</p>
                             </Col>
                         </Row>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={12} className="d-flex justify-content-center">
+                        <button className={classes.AddItemBtn}>Place Your Ad</button>
                     </Col>
                 </Row>
             </Container>

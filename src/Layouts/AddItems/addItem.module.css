@@ -49,10 +49,25 @@
     color: #ffffff;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
 }
-
 .DisplayNone{
     display: none!important;
 }
 .DisplayBlock{
     display: block!important;
+}
+.AddItemBtn{
+    color: #ffffff;
+    border-radius: 2px;
+    width: 333px;
+    height: 60px;
+    border: 1px solid #000;
+    background: #000;
+    padding: 5px 16px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+    text-align: center;
+    font-family: Roboto;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
 }
