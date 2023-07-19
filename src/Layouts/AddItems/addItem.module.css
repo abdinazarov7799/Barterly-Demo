@@ -49,19 +49,7 @@
     color: #ffffff;
     box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
 }
-.CoastButtonSuccess{
-    margin: 0;
-    width: 195px;
-    height: 75px;
-    padding: 5px 16px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 2px;
-    border: 1px solid #007505!important;
-    background: #007505!important;
-    color: #ffffff;
-    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
-    }
+
 .DisplayNone{
     display: none!important;
 }

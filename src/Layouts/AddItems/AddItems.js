@@ -71,16 +71,18 @@ function AddItems() {
     const [textVisible, setTextVisible] = useState(true)
     const [coastButton , setCoastButton] = useState('Estimate the value!')
     const coastBtn = (e) =>{
-        setTextVisible(false);
         if (coastButton === 'Estimate the value!'){
             setCoastButton('Loading')
         }
         setTimeout(() => {
+            setTextVisible(false);
             setCoastButton('22.000 AED')
-            // e.target.classList = `${classes.CoastButtonSuccess}`;
-            // e.target.innerText = `22,000 AED`;
-            // console.log(e.target)
-        }, 3000);
+            e.target.setAttribute('style' ,"background: #007505")
+            if (e.target.innerHTML !== coastButton){
+                e.target.parentElement.setAttribute('style' ,"background: #007505")
+            }
+
+        }, 2000);
     }
     return (
         <>
