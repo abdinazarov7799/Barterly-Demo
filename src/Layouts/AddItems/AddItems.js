@@ -68,6 +68,20 @@ function AddItems() {
             </div>
         </div>
     );
+    const [textVisible, setTextVisible] = useState(true)
+    const [coastButton , setCoastButton] = useState('Estimate the value!')
+    const coastBtn = (e) =>{
+        setTextVisible(false);
+        if (coastButton === 'Estimate the value!'){
+            setCoastButton('Loading')
+        }
+        setTimeout(() => {
+            setCoastButton('22.000 AED')
+            // e.target.classList = `${classes.CoastButtonSuccess}`;
+            // e.target.innerText = `22,000 AED`;
+            // console.log(e.target)
+        }, 3000);
+    }
     return (
         <>
             <NavbarMenu/>
@@ -174,17 +188,51 @@ function AddItems() {
                         />
                     </Col>
                 </Row>
-                <Row className="flex-wrap justify-content-between">
-                    <Col md={6} className="d-flex align-items-center">
+                <Row className="flex-wrap justify-content-between mt-2 mt-md-4">
+                    <Col md={6} className="d-flex align-items-center align-self-baseline">
                         <Col md={8}>
-                            <p className={classes.InputText} style={{margin: 0}}>In this section you can estimate the value of your item. Remember that the estimated value
-                                can be incorrect</p>
+                           <Col className={textVisible ? classes.DisplayBlock : classes.DisplayNone}>
+                               <p className={classes.InputText} style={{margin: 0}}>In this section you can estimate the
+                                   value of your item. Remember that the estimated value
+                                   can be incorrect</p>
+                           </Col>
+                            <Col className={!textVisible ? classes.DisplayBlock : classes.DisplayNone}>
+                                <p className={classes.InputTitle} style={{color: '#007505'}}>This is estimated value of your item by Barterly:</p>
+                                <p className={classes.InputText} style={{margin: 0}}>In this section you can add or subtract the value of your
+                                    item if it is not correct. You can increase this value max. to 20%.</p>
+                            </Col>
+
                         </Col>
                         <Col className="d-flex justify-content-end">
-                            <button className={classes.CoastButton}>Estimate the value!</button>
+                            <Button type="primary"
+                                    className={classes.CoastButton}
+                                    onClick={coastBtn}>
+                                {coastButton}
+                            </Button>
                         </Col>
                     </Col>
-                    <Col md={6}></Col>
+                    <Col md={6}>
+                        <Row className="flex-wrap justify-content-end">
+                            <Col md={6}>
+                                <p className={classes.InputTitle}><span>*</span> Select what you want</p>
+                                <Cascader className="w-100" options={options} onChange={onChange}
+                                          placeholder="Select"/>
+                                <p className={classes.InputText}>Please select what do you want: Compensation in barter or upgrade item?</p>
+                            </Col>
+                            <Col md={6}>
+                                <p className={classes.InputTitle}><span>*</span> How much can you pay for upgrade?</p>
+                                <Cascader className="w-100" options={options} onChange={onChange}
+                                          placeholder="198,000"/>
+                                <p className={classes.InputText}>Please enter the amount of money in AED</p>
+                            </Col>
+                            <Col md={6}>
+                                <p className={classes.InputTitle}><span>*</span> How much do you want above item?</p>
+                                <Cascader className="w-100" options={options} onChange={onChange}
+                                          placeholder="198,000"/>
+                                <p className={classes.InputText}>Please enter the amount of money in AED</p>
+                            </Col>
+                        </Row>
+                    </Col>
                 </Row>
             </Container>
 
