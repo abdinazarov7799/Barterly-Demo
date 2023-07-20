@@ -32,12 +32,12 @@ function SuccessPage() {
                 </Row>
                 <Row className="d-flex justify-content-center">
                     <Col md={4}>
-                        <Link to='/addItems'>
+                        <Link to='/'>
                             <Button
                                 type={"primary"}
                                 className={classes.BackBtn}
                             >
-                                Go back
+                                Go to home
                             </Button>
                         </Link>
                     </Col>

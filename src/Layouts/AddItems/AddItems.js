@@ -22,14 +22,14 @@ const options = [
     },
 ];
 const itemYear = [];
-for (let i=2023; i>=2000 ; i--){
+for (let i = 2023; i >= 2000; i--) {
     itemYear.push(
         {
             value: `${i}`,
             label: `${i}`,
         })
 }
-const selectWant =[
+const selectWant = [
     {
         value: 'upgrade',
         label: 'Upgrade my item',
@@ -43,14 +43,43 @@ const selectWant =[
         label: 'Straight barter',
     }
 ];
+const initialFormData = {
+    category: '',
+    description: '',
+    year: '',
+    milage: '',
+    model: '',
+    brand: '',
+    image: '',
+    detailed_description: '',
+    whatYouWant: '',
+    upgrade_pay: '',
+    above_pay: ''
+}
 
 function AddItems() {
-    const onChange = (value) => {
-        console.log(value);
-    };
+    const [formData, setFormData] = useState(initialFormData)
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
+    const [textVisible, setTextVisible] = useState(true)
+    const [coastButton, setCoastButton] = useState('Estimate the value!')
+    const [coast, setCoast] = useState(Number(Math.floor(Math.random()
+        * (30000 - 20000)) + 20000));
     const [whatYouWant, setWhatYouWant] = useState([])
+    const onChange = (e) => {
+        const {name, value} = e.target;
+        setFormData((prevState) => ({
+                ...prevState,
+                [name]: value}
+        ));
+    };
+    // const onChangeSelect = (value, selectedOptions) => {
+    //     const { name } = selectedOptions[0];
+    //     setFormData((prevState) => ({
+    //         ...prevState,
+    //         [name]: value[0],
+    //     }));
+    // };
     const getBase64 = (img, callback) => {
         const reader = new FileReader();
         reader.addEventListener('load', () => callback(reader.result));
@@ -93,23 +122,23 @@ function AddItems() {
             </div>
         </div>
     );
-    const [textVisible, setTextVisible] = useState(true)
-    const [coastButton , setCoastButton] = useState('Estimate the value!')
-    const [coast, setCoast] = useState(Number(Math.floor(Math.random()
-        * (30000 - 20000)) + 20000));
-    const coastBtn = (e) =>{
-        if (coastButton === 'Estimate the value!'){
+    const coastBtn = (e) => {
+        if (coastButton === 'Estimate the value!') {
             setCoastButton('Loading')
         }
         setTimeout(() => {
             setTextVisible(false);
-            e.target.setAttribute('style' ,"background: #007505")
-            if (e.target.innerHTML === "Loading"){
-                e.target.parentElement.setAttribute('style' ,"background: #007505")
+            e.target.setAttribute('style', "background: #007505")
+            if (e.target.innerHTML === "Loading") {
+                e.target.parentElement.setAttribute('style', "background: #007505")
             }
 
             setCoastButton(`${coast.toLocaleString("en-US")} AED`)
         }, 2000);
+    }
+    const SubmitHandler = (e) => {
+        e.preventDefault();
+        console.log(e)
     }
     return (
         <>
@@ -124,185 +153,256 @@ function AddItems() {
                         fill in the necessary information below. Your ad will reach a wide audience
                         and increase your chances of finding the right buyer.</p>
                 </Row>
-                <Row className="flex-wrap justify-content-between">
-                    <Col md={4}>
-                        <p className={classes.InputTitle}><span>*</span> Select the category of item</p>
-                        <Cascader className="w-100" options={options} onChange={onChange} placeholder="Cars"/>
-                        <p className={classes.InputText}>Please select category of item</p>
-                    </Col>
-                    <Col md={7}>
-                        <p className={classes.InputTitle}><span>*</span> Please add short description of your item:
-                            (e.g.
-                            Honda Accord 2013 for bartering)</p>
-                        <Input className="w-100" onChange={onChange}
-                                  placeholder="Honda Accord 2013 for bartering"/>
-                        <p className={classes.InputText}>Please add short description of your item</p>
-                    </Col>
-                    <Col md={6}>
-                        <Row>
-                            <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> Input the year of your car</p>
-                                <Cascader className="w-100" options={itemYear} onChange={onChange} placeholder="2011"/>
-                                <p className={classes.InputText}>Please enter the year of your car</p>
-                            </Col>
-                            <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> Input the milage of your car (km)</p>
-                                <Input className="w-100"
-                                       onChange={onChange}
-                                       placeholder="198,000"
-                                       type="number"
-                                />
-                                <p className={classes.InputText}>Please enter the milage of your car</p>
-                            </Col>
-                            <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> Select the car model</p>
-                                <Cascader className="w-100" options={options} onChange={onChange}
-                                          placeholder="Select car brand first"/>
-                                <p className={classes.InputText}>Please select category of item</p>
-                            </Col>
-                            <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> Select the car brand</p>
-                                <Cascader className="w-100" options={options} onChange={onChange}
-                                          placeholder="Chevrolet"/>
-                                <p className={classes.InputText}>Please select car brand</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12} className="d-flex align-items-center justify-content-between">
-                                <Col md={2}>
-                                    <p className={classes.InputTitle}><span>*</span> Upload photo:</p>
+                <form onSubmit={SubmitHandler}>
+                    <Row className="flex-wrap justify-content-between">
+                        <Col md={4}>
+                            <p className={classes.InputTitle}><span>*</span> Select the category of item</p>
+                            <Cascader className="w-100"
+                                      options={options}
+                                      onChange={(value) =>{
+                                          setFormData((prevState) => ({
+                                              ...prevState,
+                                              category: value[0]
+                                          }));
+                                      }}
+                                      placeholder="Cars"
+                                      name="category"
+                                      value={formData.category}
+                            />
+                            <p className={classes.InputText}>Please select category of item</p>
+                        </Col>
+                        <Col md={7}>
+                            <p className={classes.InputTitle}><span>*</span> Please add short description of your item:
+                                (e.g.
+                                Honda Accord 2013 for bartering)</p>
+                            <Input className="w-100"
+                                   onChange={onChange}
+                                   placeholder="Honda Accord 2013 for bartering"
+                                   name="description"
+                                   value={formData.description}
+                            />
+                            <p className={classes.InputText}>Please add short description of your item</p>
+                        </Col>
+                        <Col md={6}>
+                            <Row>
+                                <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> Input the year of your car</p>
+                                    <Cascader className="w-100"
+                                              options={itemYear}
+                                              onChange={(value) =>{
+                                                  setFormData((prevState) => ({
+                                                      ...prevState,
+                                                      year: value[0]
+                                                  }));
+                                              }}
+                                              placeholder="2011"
+                                              name="year"
+                                              value={formData.year}
+                                    />
+                                    <p className={classes.InputText}>Please enter the year of your car</p>
                                 </Col>
-                                <Upload
-                                    name="avatar"
-                                    listType="picture-card"
-                                    className="avatar-uploader w-50"
-                                    showUploadList={false}
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    beforeUpload={beforeUpload}
-                                    onChange={handleChange}
-                                >
-                                    {imageUrl ? (
-                                        <img
-                                            src={imageUrl}
-                                            alt="avatar"
-                                            style={{
-                                                width: '100%',
-                                            }}
-                                        />
-                                    ) : (
-                                        uploadButton
-                                    )}
-                                </Upload>
-                                <p className={classes.InputText}>
-                                    Recommanded resolution is 1920x1080 with file size less than 2MB, keep visual
-                                    elements centered
-                                </p>
-                            </Col>
-                        </Row>
-                    </Col>
-                    <Col md={6}>
-                        <p className={classes.InputTitle}><span>*</span> Please add detailed description of your item:
-                        </p>
-                        <TextArea
-                            // value={value}
-                            // onChange={(e) => setValue(e.target.value)}
-                            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tempor nunc,
+                                <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> Input the milage of your car (km)
+                                    </p>
+                                    <Input className="w-100"
+                                           onChange={onChange}
+                                           placeholder="198,000"
+                                           type="number"
+                                           name="milage"
+                                           value={formData.milage}
+                                    />
+                                    <p className={classes.InputText}>Please enter the milage of your car</p>
+                                </Col>
+                                <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> Select the car model</p>
+                                    <Cascader className="w-100"
+                                              options={options}
+                                              onChange={(value) =>{
+                                                  setFormData((prevState) => ({
+                                                      ...prevState,
+                                                      model: value[0]
+                                                  }));
+                                              }}
+                                              placeholder="Select car brand first"
+                                              name="model"
+                                              value={formData.model}
+                                    />
+                                    <p className={classes.InputText}>Please select category of item</p>
+                                </Col>
+                                <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> Select the car brand</p>
+                                    <Cascader className="w-100"
+                                              options={options}
+                                              onChange={(value) =>{
+                                                  setFormData((prevState) => ({
+                                                      ...prevState,
+                                                      brand: value[0]
+                                                  }));
+                                              }}
+                                              placeholder="Chevrolet"
+                                              name="brand"
+                                              value={formData.brand}
+                                    />
+                                    <p className={classes.InputText}>Please select car brand</p>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={12} className="d-flex align-items-center justify-content-between">
+                                    <Col md={2}>
+                                        <p className={classes.InputTitle}><span>*</span> Upload photo:</p>
+                                    </Col>
+                                    <Upload
+                                        name="avatar"
+                                        listType="picture-card"
+                                        className="avatar-uploader w-50"
+                                        showUploadList={false}
+                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                        beforeUpload={beforeUpload}
+                                        onChange={handleChange}
+                                    >
+                                        {imageUrl ? (
+                                            <img
+                                                src={imageUrl}
+                                                alt="avatar"
+                                                style={{
+                                                    width: '100%',
+                                                }}
+                                            />
+                                        ) : (
+                                            uploadButton
+                                        )}
+                                    </Upload>
+                                    <p className={classes.InputText}>
+                                        Recommanded resolution is 1920x1080 with file size less than 2MB, keep visual
+                                        elements centered
+                                    </p>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col md={6}>
+                            <p className={classes.InputTitle}><span>*</span> Please add detailed description of your
+                                item:
+                            </p>
+                            <TextArea
+                                onChange={onChange}
+                                name="detailed_description"
+                                value={formData.detailed_description}
+                                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tempor nunc,
                                  eleifend pharetra nisl. Fusce faucibus efficitur turpis, quis vehicula massa dictum at.
                                 Proin molestie metus non lectus semper, quis consequat elit tempus. Curabitur ac velit
                                  lacus. Duis lacinia diam est, et semper lectus suscipit quis. Sed elementum erat
                                 massa, sit amet feugiat tortor vulputate id. Praesent auctor et massa a rutrum. Nam
                                 congue malesuada urna, ut tristique tellus hendrerit a. Mauris in dui orci. Vestibulum
                                 sagittis justo id pellentesque tempor. Vestibulum eu commodo est."
-                            autoSize={{
-                                minRows: 11,
-                                maxRows: 11,
-                            }}
-                        />
-                    </Col>
-                </Row>
-                <Row className="flex-wrap justify-content-between mt-2 mt-md-4 align-items-center">
-                    <Col md={12} lg={6} className="d-flex align-items-center align-self-baseline">
-                        <Col md={8}>
-                           <Col className={textVisible ? classes.DisplayBlock : classes.DisplayNone}>
-                               <p className={classes.InputText} style={{margin: 0}}>In this section you can estimate the
-                                   value of your item. Remember that the estimated value
-                                   can be incorrect</p>
-                           </Col>
-                            <Col className={!textVisible ? classes.DisplayBlock : classes.DisplayNone}>
-                                <p className={classes.InputTitle} style={{color: '#007505'}}>This is estimated value of your item by Barterly:</p>
-                                <p className={classes.InputText} style={{margin: 0}}>In this section you can add or subtract the value of your
-                                    item if it is not correct. You can increase this value max. to 20%.</p>
-                            </Col>
-
+                                autoSize={{
+                                    minRows: 11,
+                                    maxRows: 11,
+                                }}
+                            />
                         </Col>
-                        <Col md={4} className="d-flex justify-content-end">
-                            <Button type="primary"
-                                    className={classes.CoastButton}
-                                    onClick={coastBtn}>
-                                {coastButton}
-                            </Button>
-                            {!textVisible ?
-                                <Col className="ms-1">
-                                    <Button type='default'
-                                            className={classes.CountBtn}
-                                            onClick={() => {
-                                                setCoast(coast + 200);
-                                                setCoastButton(`${coast.toLocaleString("en-US")} AED`)
-                                            }}
-                                    >
-                                        +
-                                    </Button>
-                                    <Button type='default'
-                                            className={classes.CountBtn}
-                                            onClick={() => {
-                                                setCoast(coast - 200);
-                                                setCoastButton(`${coast.toLocaleString("en-US")} AED`)
-                                            }}
-                                    >
-                                        -
-                                    </Button>
-                                </Col>: null}
-                        </Col>
-                    </Col>
-                    <Col md={12} lg={6}>
-                        <Row className="flex-wrap mt-3 mt-lg-0">
-                            <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> Select what you want</p>
-                                <Cascader className="w-100 h-auto" options={selectWant} onChange={(e)=>{setWhatYouWant(e)}}
-                                          placeholder="Select"/>
-                                <p className={classes.InputText}>Please select what do you want: Compensation in barter or upgrade item?</p>
-                            </Col>
-                            {whatYouWant[0] === 'upgrade' ? <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> How much can you pay for upgrade?</p>
-                                <Input className="w-100"
-                                       options={options}
-                                       onChange={onChange}
-                                       placeholder="198,000"
-                                       type="number"
-                                />
-                                <p className={classes.InputText}>Please enter the amount of money in AED</p>
-                            </Col> : null}
+                    </Row>
+                    <Row className="flex-wrap justify-content-between mt-2 mt-md-4 align-items-center">
+                        <Col md={12} lg={6} className="d-flex align-items-center align-self-baseline">
+                            <Col md={8}>
+                                <Col className={textVisible ? classes.DisplayBlock : classes.DisplayNone}>
+                                    <p className={classes.InputText} style={{margin: 0}}>In this section you can
+                                        estimate the
+                                        value of your item. Remember that the estimated value
+                                        can be incorrect</p>
+                                </Col>
+                                <Col className={!textVisible ? classes.DisplayBlock : classes.DisplayNone}>
+                                    <p className={classes.InputTitle} style={{color: '#007505'}}>This is estimated value
+                                        of your item by Barterly:</p>
+                                    <p className={classes.InputText} style={{margin: 0}}>In this section you can add or
+                                        subtract the value of your
+                                        item if it is not correct. You can increase this value max. to 20%.</p>
+                                </Col>
 
-                            {whatYouWant[0] === 'above' ? <Col md={6}>
-                                <p className={classes.InputTitle}><span>*</span> How much do you want above item?</p>
-                                <Input className="w-100"
-                                       options={options}
-                                       onChange={onChange}
-                                       placeholder="198,000"
-                                       type="number"
-                                />
-                                <p className={classes.InputText}>Please enter the amount of money in AED</p>
-                            </Col> : null}
-                        </Row>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={12} className="d-flex justify-content-center mb-3 mb-md-0">
-                        <Link to="/addItem/successeful-page">
-                            <button className={classes.AddItemBtn}>Place Your Ad</button>
-                        </Link>
-                    </Col>
-                </Row>
+                            </Col>
+                            <Col md={4} className="d-flex justify-content-end">
+                                <Button type="primary"
+                                        className={classes.CoastButton}
+                                        onClick={coastBtn}>
+                                    {coastButton}
+                                </Button>
+                                {!textVisible ?
+                                    <Col className="ms-1">
+                                        <Button type='default'
+                                                className={classes.CountBtn}
+                                                onClick={() => {
+                                                    setCoast(coast + 200);
+                                                    setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                                }}
+                                        >
+                                            +
+                                        </Button>
+                                        <Button type='default'
+                                                className={classes.CountBtn}
+                                                onClick={() => {
+                                                    setCoast(coast - 200);
+                                                    setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                                }}
+                                        >
+                                            -
+                                        </Button>
+                                    </Col> : null}
+                            </Col>
+                        </Col>
+                        <Col md={12} lg={6}>
+                            <Row className="flex-wrap mt-3 mt-lg-0">
+                                <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> Select what you want</p>
+                                    <Cascader className="w-100 h-auto"
+                                              options={selectWant}
+                                              onChange={(value) => {
+                                                  setWhatYouWant(value);
+                                                  setFormData((prevState) => ({
+                                                      ...prevState,
+                                                      whatYouWant: value[0]
+                                                  }));
+                                              }}
+                                              value={formData.whatYouWant}
+                                              name="whatYouWant"
+                                              placeholder="Select"/>
+                                    <p className={classes.InputText}>Please select what do you want: Compensation in
+                                        barter or upgrade item?</p>
+                                </Col>
+                                {whatYouWant[0] === 'upgrade' ? <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> How much can you pay for upgrade?
+                                    </p>
+                                    <Input className="w-100"
+                                           onChange={onChange}
+                                           placeholder="198,000"
+                                           type="number"
+                                           name="upgrade_pay"
+                                           value={formData.upgrade_pay}
+                                    />
+                                    <p className={classes.InputText}>Please enter the amount of money in AED</p>
+                                </Col> : null}
+
+                                {whatYouWant[0] === 'above' ? <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> How much do you want above item?
+                                    </p>
+                                    <Input className="w-100"
+                                           onChange={onChange}
+                                           placeholder="198,000"
+                                           type="number"
+                                           name="above_pay"
+                                           value={formData.above_pay}
+                                    />
+                                    <p className={classes.InputText}>Please enter the amount of money in AED</p>
+                                </Col> : null}
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12} className="d-flex justify-content-center mb-3 mb-md-0">
+                            {/*<Link to="/addItem/successeful-page">*/}
+                            <button type={"submit"} className={classes.AddItemBtn}>Place Your Ad</button>
+                            {/*</Link>*/}
+                        </Col>
+                    </Row>
+                </form>
             </Container>
 
             <Footer/>
