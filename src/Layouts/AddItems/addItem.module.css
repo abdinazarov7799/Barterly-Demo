@@ -72,3 +72,11 @@
     line-height: 22px;
     /*margin-bottom: 20px;*/
 }
+.CountBtn{
+    width: 30px;
+    height: 35px;
+    padding: 0;
+}
+.CountBtn:nth-child(1){
+    margin-bottom: 5px;
+}

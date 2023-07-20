@@ -4,6 +4,9 @@ import Footer from "../../components/footer/Footer";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./successfulPage.module.css";
 import Star from '../../assets/images/star.svg';
+import {Button} from "antd";
+import {Link} from "react-router-dom";
+import React from "react";
 
 function SuccessPage() {
     return (
@@ -23,8 +26,20 @@ function SuccessPage() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="d-flex justify-content-center mt-5">
+                    <Col className="d-flex justify-content-center mt-5 mb-5">
                         <img width={256} height={256} src={Star}/>
+                    </Col>
+                </Row>
+                <Row className="d-flex justify-content-center">
+                    <Col md={4}>
+                        <Link to='/addItems'>
+                            <Button
+                                type={"primary"}
+                                className={classes.BackBtn}
+                            >
+                                Go back
+                            </Button>
+                        </Link>
                     </Col>
                 </Row>
             </Container>

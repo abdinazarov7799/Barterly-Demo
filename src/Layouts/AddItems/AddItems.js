@@ -43,12 +43,11 @@ const selectWant =[
         label: 'Straight barter',
     }
 ];
-const onChange = (value) => {
-    console.log(value);
-};
-
 
 function AddItems() {
+    const onChange = (value) => {
+        console.log(value);
+    };
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
     const [whatYouWant, setWhatYouWant] = useState([])
@@ -96,6 +95,8 @@ function AddItems() {
     );
     const [textVisible, setTextVisible] = useState(true)
     const [coastButton , setCoastButton] = useState('Estimate the value!')
+    const [coast, setCoast] = useState(Number(Math.floor(Math.random()
+        * (30000 - 20000)) + 20000));
     const coastBtn = (e) =>{
         if (coastButton === 'Estimate the value!'){
             setCoastButton('Loading')
@@ -106,7 +107,8 @@ function AddItems() {
             if (e.target.innerHTML === "Loading"){
                 e.target.parentElement.setAttribute('style' ,"background: #007505")
             }
-            setCoastButton('22.000 AED')
+
+            setCoastButton(`${coast.toLocaleString("en-US")} AED`)
         }, 2000);
     }
     return (
@@ -239,6 +241,26 @@ function AddItems() {
                                     onClick={coastBtn}>
                                 {coastButton}
                             </Button>
+                            <Col className="ms-1">
+                                <Button type='default'
+                                        className={classes.CountBtn}
+                                        onClick={() => {
+                                            setCoast(coast + 200);
+                                            setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                        }}
+                                >
+                                    +
+                                </Button>
+                                <Button type='default'
+                                        className={classes.CountBtn}
+                                        onClick={() => {
+                                            setCoast(coast - 200);
+                                            setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                        }}
+                                >
+                                    -
+                                </Button>
+                            </Col>
                         </Col>
                     </Col>
                     <Col md={12} lg={6}>
