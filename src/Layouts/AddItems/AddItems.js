@@ -7,6 +7,8 @@ import {Cascader, Upload, message, Button, Input} from "antd";
 import React, {useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
+import './addItem.css';
+import {Link} from "react-router-dom";
 
 
 const options = [
@@ -45,9 +47,11 @@ const onChange = (value) => {
     console.log(value);
 };
 
+
 function AddItems() {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
+    const [whatYouWant, setWhatYouWant] = useState([])
     const getBase64 = (img, callback) => {
         const reader = new FileReader();
         reader.addEventListener('load', () => callback(reader.result));
@@ -98,11 +102,11 @@ function AddItems() {
         }
         setTimeout(() => {
             setTextVisible(false);
-            setCoastButton('22.000 AED')
             e.target.setAttribute('style' ,"background: #007505")
-            if (e.target.innerHTML !== coastButton){
+            if (e.target.innerHTML === "Loading"){
                 e.target.parentElement.setAttribute('style' ,"background: #007505")
             }
+            setCoastButton('22.000 AED')
         }, 2000);
     }
     return (
@@ -141,8 +145,11 @@ function AddItems() {
                             </Col>
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> Input the milage of your car (km)</p>
-                                <Input className="w-100" onChange={onChange}
-                                          placeholder="198,000"/>
+                                <Input className="w-100"
+                                       onChange={onChange}
+                                       placeholder="198,000"
+                                       type="number"
+                                />
                                 <p className={classes.InputText}>Please enter the milage of your car</p>
                             </Col>
                             <Col md={6}>
@@ -211,8 +218,8 @@ function AddItems() {
                         />
                     </Col>
                 </Row>
-                <Row className="flex-wrap justify-content-between mt-2 mt-md-4">
-                    <Col md={6} className="d-flex align-items-center align-self-baseline">
+                <Row className="flex-wrap justify-content-between mt-2 mt-md-4 align-items-center">
+                    <Col md={12} lg={6} className="d-flex align-items-center align-self-baseline">
                         <Col md={8}>
                            <Col className={textVisible ? classes.DisplayBlock : classes.DisplayNone}>
                                <p className={classes.InputText} style={{margin: 0}}>In this section you can estimate the
@@ -226,7 +233,7 @@ function AddItems() {
                             </Col>
 
                         </Col>
-                        <Col className="d-flex justify-content-end">
+                        <Col md={4} className="d-flex justify-content-end">
                             <Button type="primary"
                                     className={classes.CoastButton}
                                     onClick={coastBtn}>
@@ -234,36 +241,46 @@ function AddItems() {
                             </Button>
                         </Col>
                     </Col>
-                    <Col md={6}>
-                        <Row className="flex-wrap justify-content-end">
+                    <Col md={12} lg={6}>
+                        <Row className="flex-wrap mt-3 mt-lg-0">
                             <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> Select what you want</p>
-                                <Cascader className="w-100 h-auto" options={selectWant} onChange={onChange}
+                                <Cascader className="w-100 h-auto" options={selectWant} onChange={(e)=>{setWhatYouWant(e)}}
                                           placeholder="Select"/>
                                 <p className={classes.InputText}>Please select what do you want: Compensation in barter or upgrade item?</p>
                             </Col>
-                            <Col md={6}>
+                            {whatYouWant[0] === 'upgrade' ? <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> How much can you pay for upgrade?</p>
-                                <Input className="w-100" options={options} onChange={onChange}
-                                          placeholder="198,000"/>
+                                <Input className="w-100"
+                                       options={options}
+                                       onChange={onChange}
+                                       placeholder="198,000"
+                                       type="number"
+                                />
                                 <p className={classes.InputText}>Please enter the amount of money in AED</p>
-                            </Col>
-                            <Col md={6}>
+                            </Col> : null}
+
+                            {whatYouWant[0] === 'above' ? <Col md={6}>
                                 <p className={classes.InputTitle}><span>*</span> How much do you want above item?</p>
-                                <Input className="w-100" options={options} onChange={onChange}
-                                          placeholder="198,000"/>
+                                <Input className="w-100"
+                                       options={options}
+                                       onChange={onChange}
+                                       placeholder="198,000"
+                                       type="number"
+                                />
                                 <p className={classes.InputText}>Please enter the amount of money in AED</p>
-                            </Col>
+                            </Col> : null}
                         </Row>
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={12} className="d-flex justify-content-center">
-                        <button className={classes.AddItemBtn}>Place Your Ad</button>
+                    <Col md={12} className="d-flex justify-content-center mb-3 mb-md-0">
+                        <Link to="/addItem/successeful-page">
+                            <button className={classes.AddItemBtn}>Place Your Ad</button>
+                        </Link>
                     </Col>
                 </Row>
             </Container>
-
 
             <Footer/>
         </>

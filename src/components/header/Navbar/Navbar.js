@@ -66,15 +66,13 @@ function NavbarMenu() {
                                 <NavLink className="nav-text" href="#">About us</NavLink>
                             </NavItem>
                         </Nav>
-                        <Col md={5}>
-                            <div className="right-menu">
+                        <Col className="right-menu">
                                 <NavLink className="nav-text" href="#">Sign Up or Sign in</NavLink>
                                 <Link to='/addItems'>
                                     <button>
                                         Place Your Ad
                                     </button>
                                 </Link>
-                            </div>
                         </Col>
                         <Collapse isOpen={!collapsed} navbar>
                             <Nav navbar style={{justifyContent: "center", alignItems: "center"}}>
