@@ -241,26 +241,27 @@ function AddItems() {
                                     onClick={coastBtn}>
                                 {coastButton}
                             </Button>
-                            <Col className="ms-1">
-                                <Button type='default'
-                                        className={classes.CountBtn}
-                                        onClick={() => {
-                                            setCoast(coast + 200);
-                                            setCoastButton(`${coast.toLocaleString("en-US")} AED`)
-                                        }}
-                                >
-                                    +
-                                </Button>
-                                <Button type='default'
-                                        className={classes.CountBtn}
-                                        onClick={() => {
-                                            setCoast(coast - 200);
-                                            setCoastButton(`${coast.toLocaleString("en-US")} AED`)
-                                        }}
-                                >
-                                    -
-                                </Button>
-                            </Col>
+                            {!textVisible ?
+                                <Col className="ms-1">
+                                    <Button type='default'
+                                            className={classes.CountBtn}
+                                            onClick={() => {
+                                                setCoast(coast + 200);
+                                                setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                            }}
+                                    >
+                                        +
+                                    </Button>
+                                    <Button type='default'
+                                            className={classes.CountBtn}
+                                            onClick={() => {
+                                                setCoast(coast - 200);
+                                                setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                            }}
+                                    >
+                                        -
+                                    </Button>
+                                </Col>: null}
                         </Col>
                     </Col>
                     <Col md={12} lg={6}>
