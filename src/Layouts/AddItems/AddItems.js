@@ -129,6 +129,21 @@ function AddItems() {
     };
 
 
+    // const handleChange = (info) => {
+    //     if (info.file.status === 'uploading') {
+    //         setLoading(true);
+    //         return;
+    //     }
+    //     if (info.file.status === 'done') {
+    //         setLoading(false);
+    //         setImageUrl(info.file.response.url); // Set the imageUrl state with the URL received from the server
+    //         setFormData((prevState) => ({
+    //             ...prevState,
+    //             image: info.file.response.url, // Set the 'image' field in the formData state to the URL
+    //         }));
+    //         console.log(info.file)
+    //     }
+    // };
     const handleChange = (info) => {
         if (info.file.status === 'uploading') {
             setLoading(true);
@@ -136,12 +151,29 @@ function AddItems() {
         }
         if (info.file.status === 'done') {
             setLoading(false);
-            setImageUrl(info.file.response.url); // Set the imageUrl state with the URL received from the server
-            setFormData((prevState) => ({
-                ...prevState,
-                image: info.file.response.url, // Set the 'image' field in the formData state to the URL
-            }));
-            console.log(info.file)
+            setImageUrl(info.file.response.url);
+
+            const formData = new FormData();
+            formData.append('image', info.file.originFileObj);
+
+            // Make the POST request using the 'fetch' API or any other method you prefer
+            fetch('https://tes.mediasolutions.uz/api.php', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    setFormData((prevState) => ({
+                        ...prevState,
+                        image: data.url,
+                    }));
+                })
+                .catch((error) => {
+                    console.error('Error uploading image:', error);
+                    // Handle the error
+                });
         }
     };
     const uploadButton = (
