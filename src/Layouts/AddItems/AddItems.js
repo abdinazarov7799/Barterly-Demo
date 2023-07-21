@@ -3,24 +3,31 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
-import {Cascader, Upload, message, Button, Input} from "antd";
-import React, {useState} from 'react';
+import {Cascader, Upload, message, Button, Input, Form} from "antd";
+import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import './addItem.css';
 import {Link} from "react-router-dom";
+import getCategories from "../../components/fetchData/getCategories";
+import getCarModel from "../../components/fetchData/getCarModel";
+import getCarBrands from "../../components/fetchData/getCarBrands";
+
+const initialFormData = {
+    category_id: '',
+    car_brand_id: '',
+    car_model: '',
+    year: '',
+    milage: '',
+    image: '',
+    name: '',
+    cost: '',
+    second_cost: '',
+    cost_type: '',
+    description: '',
+}
 
 
-const options = [
-    {
-        value: 'zhejiang',
-        label: 'Zhejiang',
-    },
-    {
-        value: 'jiangsu',
-        label: 'Jiangsu',
-    },
-];
 const itemYear = [];
 for (let i = 2023; i >= 2000; i--) {
     itemYear.push(
@@ -43,29 +50,59 @@ const selectWant = [
         label: 'Straight barter',
     }
 ];
-const initialFormData = {
-    category: '',
-    description: '',
-    year: '',
-    milage: '',
-    model: '',
-    brand: '',
-    image: '',
-    detailed_description: '',
-    whatYouWant: '',
-    upgrade_pay: '',
-    above_pay: ''
-}
 
 function AddItems() {
+    const category = []
+    const carModel = []
+    const carBrand = []
+    const [categories, setCategories] =useState([]);
+    const [carModels, setCarModels] =useState([]);
+    const [carBrands, setCarBrands] =useState([]);
     const [formData, setFormData] = useState(initialFormData)
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
     const [textVisible, setTextVisible] = useState(true)
     const [coastButton, setCoastButton] = useState('Estimate the value!')
-    const [coast, setCoast] = useState(Number(Math.floor(Math.random()
-        * (30000 - 20000)) + 20000));
+    const [coast, setCoast] = useState(
+        Number(Math.round((Math.floor(Math.random()* (30000 - 20000)) + 20000) / 100) * 100));
     const [whatYouWant, setWhatYouWant] = useState([])
+    const [selectedBrandId , setSelectedBrandId] = useState();
+
+    useEffect(() => {
+        getCategories().then(data => setCategories(data));
+        getCarModel(selectedBrandId).then(data => setCarModels(data));
+        getCarBrands().then(data => setCarBrands(data));
+    }, [formData]);
+    categories.map((el) => {
+        if (categories.length !== category.length){
+            category.push(
+                {
+                    value: `${el.id}`,
+                    label: `${el.category}`
+                }
+            )
+        }
+    })
+    carModels.map((el) => {
+        if (carModels.length !== carModel.length){
+            carModel.push(
+                {
+                    value: `${el.brand_id}`,
+                    label: `${el.model}`
+                }
+            )
+        }
+    })
+    carBrands.map((el) => {
+        if (carBrands.length !== carBrand.length){
+            carBrand.push(
+                {
+                    value: `${el.id}`,
+                    label: `${el.brand}`
+                }
+            )
+        }
+    })
     const onChange = (e) => {
         const {name, value} = e.target;
         setFormData((prevState) => ({
@@ -73,13 +110,7 @@ function AddItems() {
                 [name]: value}
         ));
     };
-    // const onChangeSelect = (value, selectedOptions) => {
-    //     const { name } = selectedOptions[0];
-    //     setFormData((prevState) => ({
-    //         ...prevState,
-    //         [name]: value[0],
-    //     }));
-    // };
+
     const getBase64 = (img, callback) => {
         const reader = new FileReader();
         reader.addEventListener('load', () => callback(reader.result));
@@ -135,10 +166,14 @@ function AddItems() {
 
             setCoastButton(`${coast.toLocaleString("en-US")} AED`)
         }, 2000);
+        setFormData((prevState) => ({
+                ...prevState,
+                ['cost']: `${coast}`}
+        ));
     }
     const SubmitHandler = (e) => {
         e.preventDefault();
-        console.log(e)
+        console.log(formData)
     }
     return (
         <>
@@ -158,16 +193,14 @@ function AddItems() {
                         <Col md={4}>
                             <p className={classes.InputTitle}><span>*</span> Select the category of item</p>
                             <Cascader className="w-100"
-                                      options={options}
+                                      options={category}
                                       onChange={(value) =>{
                                           setFormData((prevState) => ({
                                               ...prevState,
-                                              category: value[0]
-                                          }));
+                                              ['category_id']: value[0]}
+                                          ));
                                       }}
                                       placeholder="Cars"
-                                      name="category"
-                                      value={formData.category}
                             />
                             <p className={classes.InputText}>Please select category of item</p>
                         </Col>
@@ -178,8 +211,8 @@ function AddItems() {
                             <Input className="w-100"
                                    onChange={onChange}
                                    placeholder="Honda Accord 2013 for bartering"
-                                   name="description"
-                                   value={formData.description}
+                                   name="name"
+                                   value={formData.name}
                             />
                             <p className={classes.InputText}>Please add short description of your item</p>
                         </Col>
@@ -192,7 +225,7 @@ function AddItems() {
                                               onChange={(value) =>{
                                                   setFormData((prevState) => ({
                                                       ...prevState,
-                                                      year: value[0]
+                                                      ['year']: value[0]
                                                   }));
                                               }}
                                               placeholder="2011"
@@ -214,36 +247,36 @@ function AddItems() {
                                     <p className={classes.InputText}>Please enter the milage of your car</p>
                                 </Col>
                                 <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> Select the car model</p>
-                                    <Cascader className="w-100"
-                                              options={options}
-                                              onChange={(value) =>{
-                                                  setFormData((prevState) => ({
-                                                      ...prevState,
-                                                      model: value[0]
-                                                  }));
-                                              }}
-                                              placeholder="Select car brand first"
-                                              name="model"
-                                              value={formData.model}
-                                    />
-                                    <p className={classes.InputText}>Please select category of item</p>
-                                </Col>
-                                <Col md={6}>
                                     <p className={classes.InputTitle}><span>*</span> Select the car brand</p>
                                     <Cascader className="w-100"
-                                              options={options}
+                                              options={carBrand}
                                               onChange={(value) =>{
+                                                  setSelectedBrandId(value[0]);
                                                   setFormData((prevState) => ({
                                                       ...prevState,
-                                                      brand: value[0]
+                                                      ['car_brand_id']: value[0]
                                                   }));
                                               }}
                                               placeholder="Chevrolet"
-                                              name="brand"
-                                              value={formData.brand}
+                                              name="carBrand"
                                     />
                                     <p className={classes.InputText}>Please select car brand</p>
+                                </Col>
+                                <Col md={6}>
+                                    <p className={classes.InputTitle}><span>*</span> Select the car model</p>
+                                    <Cascader className="w-100"
+                                              options={carModel}
+                                              onChange={(value) =>{
+                                                  setFormData((prevState) => ({
+                                                      ...prevState,
+                                                      ['car_model']: value[0]
+                                                  }));
+                                              }}
+                                              placeholder="Select car brand first"
+                                              name="CarModel"
+                                              value={formData.car_model}
+                                    />
+                                    <p className={classes.InputText}>Please select category of item</p>
                                 </Col>
                             </Row>
                             <Row>
@@ -285,8 +318,8 @@ function AddItems() {
                             </p>
                             <TextArea
                                 onChange={onChange}
-                                name="detailed_description"
-                                value={formData.detailed_description}
+                                name="description"
+                                value={formData.description}
                                 placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tempor nunc,
                                  eleifend pharetra nisl. Fusce faucibus efficitur turpis, quis vehicula massa dictum at.
                                 Proin molestie metus non lectus semper, quis consequat elit tempus. Curabitur ac velit
@@ -332,6 +365,10 @@ function AddItems() {
                                                 onClick={() => {
                                                     setCoast(coast + 200);
                                                     setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                                    setFormData((prevState) => ({
+                                                            ...prevState,
+                                                            ['cost']: `${coast}`}
+                                                    ));
                                                 }}
                                         >
                                             +
@@ -341,6 +378,10 @@ function AddItems() {
                                                 onClick={() => {
                                                     setCoast(coast - 200);
                                                     setCoastButton(`${coast.toLocaleString("en-US")} AED`)
+                                                    setFormData((prevState) => ({
+                                                            ...prevState,
+                                                            ['cost']: `${coast}`}
+                                                    ));
                                                 }}
                                         >
                                             -
@@ -358,10 +399,10 @@ function AddItems() {
                                                   setWhatYouWant(value);
                                                   setFormData((prevState) => ({
                                                       ...prevState,
-                                                      whatYouWant: value[0]
+                                                      ['cost_type']: value[0]
                                                   }));
                                               }}
-                                              value={formData.whatYouWant}
+                                              value={formData.cost_type}
                                               name="whatYouWant"
                                               placeholder="Select"/>
                                     <p className={classes.InputText}>Please select what do you want: Compensation in
@@ -374,8 +415,8 @@ function AddItems() {
                                            onChange={onChange}
                                            placeholder="198,000"
                                            type="number"
-                                           name="upgrade_pay"
-                                           value={formData.upgrade_pay}
+                                           name="second_cost"
+                                           value={formData.second_cost}
                                     />
                                     <p className={classes.InputText}>Please enter the amount of money in AED</p>
                                 </Col> : null}
@@ -387,8 +428,8 @@ function AddItems() {
                                            onChange={onChange}
                                            placeholder="198,000"
                                            type="number"
-                                           name="above_pay"
-                                           value={formData.above_pay}
+                                           name="second_cost"
+                                           value={formData.second_cost}
                                     />
                                     <p className={classes.InputText}>Please enter the amount of money in AED</p>
                                 </Col> : null}
