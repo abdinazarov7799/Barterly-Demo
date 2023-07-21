@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import getCategories from "../../components/fetchData/getCategories";
 import getCarModel from "../../components/fetchData/getCarModel";
 import getCarBrands from "../../components/fetchData/getCarBrands";
+import {json} from "react-router";
 
 const initialFormData = {
     category_id: '',
@@ -50,6 +51,7 @@ const selectWant = [
         label: 'Straight barter',
     }
 ];
+const postEndpoint = 'https://tes.mediasolutions.uz/api.php';
 
 function AddItems() {
     const category = []
@@ -67,6 +69,17 @@ function AddItems() {
         Number(Math.round((Math.floor(Math.random()* (30000 - 20000)) + 20000) / 100) * 100));
     const [whatYouWant, setWhatYouWant] = useState([])
     const [selectedBrandId , setSelectedBrandId] = useState();
+    async function postData(url,data) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Set the appropriate content type based on your server's requirements
+            },
+            body: JSON.stringify(data), // Convert the data to a JSON string before sending
+        });
+
+        return response.json(); // Assuming the server returns JSON data in response
+    }
 
     useEffect(() => {
         getCategories().then(data => setCategories(data));
@@ -111,11 +124,6 @@ function AddItems() {
         ));
     };
 
-    const getBase64 = (img, callback) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
-    };
     const beforeUpload = (file) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
@@ -128,22 +136,6 @@ function AddItems() {
         return isJpgOrPng && isLt2M;
     };
 
-
-    // const handleChange = (info) => {
-    //     if (info.file.status === 'uploading') {
-    //         setLoading(true);
-    //         return;
-    //     }
-    //     if (info.file.status === 'done') {
-    //         setLoading(false);
-    //         setImageUrl(info.file.response.url); // Set the imageUrl state with the URL received from the server
-    //         setFormData((prevState) => ({
-    //             ...prevState,
-    //             image: info.file.response.url, // Set the 'image' field in the formData state to the URL
-    //         }));
-    //         console.log(info.file)
-    //     }
-    // };
     const handleChange = (info) => {
         if (info.file.status === 'uploading') {
             setLoading(true);
@@ -164,7 +156,6 @@ function AddItems() {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data);
                     setFormData((prevState) => ({
                         ...prevState,
                         image: data.url,
@@ -209,7 +200,15 @@ function AddItems() {
     }
     const SubmitHandler = (e) => {
         e.preventDefault();
-        console.log(formData)
+        postData(postEndpoint, formData)
+            .then((data) => {
+                // Handle the response from the server if needed
+                console.log('Response from server:', data);
+            })
+            .catch((error) => {
+                // console.log(formData)
+                console.error('Error posting data:', error);
+            });
     }
     return (
         <>
@@ -237,6 +236,12 @@ function AddItems() {
                                           ));
                                       }}
                                       placeholder="Cars"
+                                      rules={[
+                                          {
+                                              required: true,
+                                              message: 'Please select category',
+                                          },
+                                      ]}
                             />
                             <p className={classes.InputText}>Please select category of item</p>
                         </Col>
@@ -249,6 +254,7 @@ function AddItems() {
                                    placeholder="Honda Accord 2013 for bartering"
                                    name="name"
                                    value={formData.name}
+                                   required
                             />
                             <p className={classes.InputText}>Please add short description of your item</p>
                         </Col>
@@ -267,6 +273,12 @@ function AddItems() {
                                               placeholder="2011"
                                               name="year"
                                               value={formData.year}
+                                              rules={[
+                                                  {
+                                                      required: true,
+                                                      message: 'Please select car year',
+                                                  },
+                                              ]}
                                     />
                                     <p className={classes.InputText}>Please enter the year of your car</p>
                                 </Col>
@@ -279,6 +291,7 @@ function AddItems() {
                                            type="number"
                                            name="milage"
                                            value={formData.milage}
+                                           required
                                     />
                                     <p className={classes.InputText}>Please enter the milage of your car</p>
                                 </Col>
@@ -295,6 +308,12 @@ function AddItems() {
                                               }}
                                               placeholder="Chevrolet"
                                               name="carBrand"
+                                              rules={[
+                                                  {
+                                                      required: true,
+                                                      message: 'Please select car brand',
+                                                  },
+                                              ]}
                                     />
                                     <p className={classes.InputText}>Please select car brand</p>
                                 </Col>
@@ -311,6 +330,12 @@ function AddItems() {
                                               placeholder="Select car brand first"
                                               name="CarModel"
                                               value={formData.car_model}
+                                              rules={[
+                                                  {
+                                                      required: true,
+                                                      message: 'Please select car model',
+                                                  },
+                                              ]}
                                     />
                                     <p className={classes.InputText}>Please select category of item</p>
                                 </Col>
@@ -329,6 +354,12 @@ function AddItems() {
                                         withCredentials={true}
                                         beforeUpload={beforeUpload}
                                         onChange={handleChange}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please upload image',
+                                            },
+                                        ]}
                                     >
                                         {imageUrl ? (
                                             <img
@@ -357,6 +388,7 @@ function AddItems() {
                                 onChange={onChange}
                                 name="description"
                                 value={formData.description}
+                                required
                                 placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tempor nunc,
                                  eleifend pharetra nisl. Fusce faucibus efficitur turpis, quis vehicula massa dictum at.
                                 Proin molestie metus non lectus semper, quis consequat elit tempus. Curabitur ac velit
@@ -432,6 +464,12 @@ function AddItems() {
                                     <p className={classes.InputTitle}><span>*</span> Select what you want</p>
                                     <Cascader className="w-100 h-auto"
                                               options={selectWant}
+                                              rules={[
+                                                  {
+                                                      required: true,
+                                                      message: 'Please select what do you want: Compensation in barter or upgrade item?',
+                                                  },
+                                              ]}
                                               onChange={(value) => {
                                                   setWhatYouWant(value);
                                                   setFormData((prevState) => ({
@@ -454,6 +492,7 @@ function AddItems() {
                                            type="number"
                                            name="second_cost"
                                            value={formData.second_cost}
+                                           required
                                     />
                                     <p className={classes.InputText}>Please enter the amount of money in AED</p>
                                 </Col> : null}
@@ -467,6 +506,7 @@ function AddItems() {
                                            type="number"
                                            name="second_cost"
                                            value={formData.second_cost}
+                                           required
                                     />
                                     <p className={classes.InputText}>Please enter the amount of money in AED</p>
                                 </Col> : null}

@@ -68,7 +68,7 @@ function NavbarMenu() {
                         </Nav>
                         <Col className="right-menu">
                                 <NavLink className="nav-text" href="#">Sign Up or Sign in</NavLink>
-                                <Link to='/addItems'>
+                                <Link to='/addItems' style={{margin: 0}}>
                                     <button>
                                         Place Your Ad
                                     </button>
