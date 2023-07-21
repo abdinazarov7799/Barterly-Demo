@@ -128,20 +128,20 @@ function AddItems() {
         return isJpgOrPng && isLt2M;
     };
 
+
     const handleChange = (info) => {
         if (info.file.status === 'uploading') {
             setLoading(true);
             return;
         }
         if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, (url) => {
-                setLoading(false);
-                setImageUrl(url);
-                setFormData((prevState) => ({
-                        ...prevState,
-                        ['image']: `${url}`}
-                ));
-            });
+            setLoading(false);
+            setImageUrl(info.file.response.url); // Set the imageUrl state with the URL received from the server
+            setFormData((prevState) => ({
+                ...prevState,
+                image: info.file.response.url, // Set the 'image' field in the formData state to the URL
+            }));
+            console.log(info.file)
         }
     };
     const uploadButton = (
@@ -293,6 +293,7 @@ function AddItems() {
                                         className="avatar-uploader w-50"
                                         showUploadList={false}
                                         action="https://tes.mediasolutions.uz/api.php"
+                                        withCredentials={true}
                                         beforeUpload={beforeUpload}
                                         onChange={handleChange}
                                     >
