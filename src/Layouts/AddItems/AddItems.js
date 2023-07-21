@@ -192,9 +192,9 @@ function AddItems() {
         fetch('https://tes.mediasolutions.uz/api.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData) })
+            body:  JSON.stringify(formData) })
             .then(response => response.json())
             .then(data => {
                 console.log('Serverdan kelgan javob:', data);
