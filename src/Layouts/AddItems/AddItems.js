@@ -3,7 +3,7 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
-import {Cascader, Upload, message, Button, Input, Form} from "antd";
+import {Cascader, Upload, message, Button, Input} from "antd";
 import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -134,10 +134,13 @@ function AddItems() {
             return;
         }
         if (info.file.status === 'done') {
-            // Get this url from response in real world.
             getBase64(info.file.originFileObj, (url) => {
                 setLoading(false);
                 setImageUrl(url);
+                setFormData((prevState) => ({
+                        ...prevState,
+                        ['image']: `${url}`}
+                ));
             });
         }
     };
@@ -289,7 +292,7 @@ function AddItems() {
                                         listType="picture-card"
                                         className="avatar-uploader w-50"
                                         showUploadList={false}
-                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                        action="https://tes.mediasolutions.uz/api.php"
                                         beforeUpload={beforeUpload}
                                         onChange={handleChange}
                                     >
