@@ -51,7 +51,7 @@ const selectWant = [
         label: 'Straight barter',
     }
 ];
-const postEndpoint = 'https://tes.mediasolutions.uz/api.php';
+
 
 function AddItems() {
     const category = []
@@ -69,17 +69,6 @@ function AddItems() {
         Number(Math.round((Math.floor(Math.random()* (30000 - 20000)) + 20000) / 100) * 100));
     const [whatYouWant, setWhatYouWant] = useState([])
     const [selectedBrandId , setSelectedBrandId] = useState();
-    async function postData(url,data) {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', // Set the appropriate content type based on your server's requirements
-            },
-            body: JSON.stringify(data), // Convert the data to a JSON string before sending
-        });
-
-        return response.json(); // Assuming the server returns JSON data in response
-    }
 
     useEffect(() => {
         getCategories().then(data => setCategories(data));
@@ -200,15 +189,20 @@ function AddItems() {
     }
     const SubmitHandler = (e) => {
         e.preventDefault();
-        postData(postEndpoint, formData)
-            .then((data) => {
-                // Handle the response from the server if needed
-                console.log('Response from server:', data);
+        fetch('https://tes.mediasolutions.uz/api.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(formData) })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Serverdan kelgan javob:', data);
             })
-            .catch((error) => {
-                // console.log(formData)
-                console.error('Error posting data:', error);
+            .catch(error => {
+                console.error('Xato:', error);
             });
+
     }
     return (
         <>
@@ -516,7 +510,7 @@ function AddItems() {
                     <Row>
                         <Col md={12} className="d-flex justify-content-center mb-3 mb-md-0">
                             {/*<Link to="/addItem/successeful-page">*/}
-                            <button type={"submit"} className={classes.AddItemBtn}>Place Your Ad</button>
+                            <button type="submit" className={classes.AddItemBtn}>Place Your Ad</button>
                             {/*</Link>*/}
                         </Col>
                     </Row>
