@@ -151,7 +151,7 @@ function AddItems() {
         }
         if (info.file.status === 'done') {
             setLoading(false);
-            setImageUrl(info.file.response.url);
+
 
             const formData = new FormData();
             formData.append('image', info.file.originFileObj);
@@ -169,6 +169,7 @@ function AddItems() {
                         ...prevState,
                         image: data.url,
                     }));
+                    setImageUrl(data.url);
                 })
                 .catch((error) => {
                     console.error('Error uploading image:', error);
