@@ -3,16 +3,15 @@ import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
-import {Cascader, Upload, message, Button, Input} from "antd";
+import {Upload, message, Button, Input, Form, Select} from "antd";
 import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import './addItem.css';
-import {Link} from "react-router-dom";
 import getCategories from "../../components/fetchData/getCategories";
 import getCarModel from "../../components/fetchData/getCarModel";
 import getCarBrands from "../../components/fetchData/getCarBrands";
-import {json} from "react-router";
+import {Option} from "antd/es/mentions";
 
 const initialFormData = {
     category_id: '',
@@ -54,62 +53,31 @@ const selectWant = [
 
 
 function AddItems() {
-    const category = []
-    const carModel = []
-    const carBrand = []
-    const [categories, setCategories] =useState([]);
-    const [carModels, setCarModels] =useState([]);
-    const [carBrands, setCarBrands] =useState([]);
+    const [form] = Form.useForm();
+    const [success, setSuccess] = useState(false)
+    const [categories, setCategories] = useState([]);
+    const [carModels, setCarModels] = useState([]);
+    const [carBrands, setCarBrands] = useState([]);
     const [formData, setFormData] = useState(initialFormData)
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
     const [textVisible, setTextVisible] = useState(true)
     const [coastButton, setCoastButton] = useState('Estimate the value!')
     const [coast, setCoast] = useState(
-        Number(Math.round((Math.floor(Math.random()* (30000 - 20000)) + 20000) / 100) * 100));
+        Number(Math.round((Math.floor(Math.random() * (30000 - 20000)) + 20000) / 100) * 100));
     const [whatYouWant, setWhatYouWant] = useState([])
-    const [selectedBrandId , setSelectedBrandId] = useState();
-
+    const [selectedBrandId, setSelectedBrandId] = useState();
     useEffect(() => {
         getCategories().then(data => setCategories(data));
         getCarModel(selectedBrandId).then(data => setCarModels(data));
         getCarBrands().then(data => setCarBrands(data));
     }, [formData]);
-    categories.map((el) => {
-        if (categories.length !== category.length){
-            category.push(
-                {
-                    value: `${el.id}`,
-                    label: `${el.category}`
-                }
-            )
-        }
-    })
-    carModels.map((el) => {
-        if (carModels.length !== carModel.length){
-            carModel.push(
-                {
-                    value: `${el.brand_id}`,
-                    label: `${el.model}`
-                }
-            )
-        }
-    })
-    carBrands.map((el) => {
-        if (carBrands.length !== carBrand.length){
-            carBrand.push(
-                {
-                    value: `${el.id}`,
-                    label: `${el.brand}`
-                }
-            )
-        }
-    })
     const onChange = (e) => {
         const {name, value} = e.target;
         setFormData((prevState) => ({
                 ...prevState,
-                [name]: value}
+                [name]: value
+            }
         ));
     };
 
@@ -184,11 +152,18 @@ function AddItems() {
         }, 2000);
         setFormData((prevState) => ({
                 ...prevState,
-                ['cost']: `${coast}`}
+                ['cost']: `${coast}`
+            }
         ));
     }
-    const SubmitHandler = (e) => {
-        e.preventDefault();
+    const onFinish = (e) => {
+        if (whatYouWant === 'straight'){
+            setFormData((prevState) => ({
+                    ...prevState,
+                    second_cost: null
+                }
+            ));
+        }
         fetch('https://tes.mediasolutions.uz/api.php', {
             method: 'POST',
             headers: {
@@ -198,16 +173,17 @@ function AddItems() {
             .then(response => response.json())
             .then(data => {
                 console.log('Serverdan kelgan javob:', data);
+                setSuccess(data.success);
             })
             .catch(error => {
                 console.error('Xato:', error);
             });
-
     }
     return (
         <>
             <NavbarMenu/>
             <Header/>
+
             <Container>
                 <Row>
                     <h1 className={classes.Title}>Place your Advertisement </h1>
@@ -217,121 +193,170 @@ function AddItems() {
                         fill in the necessary information below. Your ad will reach a wide audience
                         and increase your chances of finding the right buyer.</p>
                 </Row>
-                <form onSubmit={SubmitHandler}>
+                <Form form={form} onFinish={onFinish} layout="vertical">
                     <Row className="flex-wrap justify-content-between">
                         <Col md={4}>
-                            <p className={classes.InputTitle}><span>*</span> Select the category of item</p>
-                            <Cascader className="w-100"
-                                      options={category}
-                                      onChange={(value) =>{
-                                          setFormData((prevState) => ({
-                                              ...prevState,
-                                              ['category_id']: value[0]}
-                                          ));
-                                      }}
-                                      placeholder="Cars"
-                                      rules={[
-                                          {
-                                              required: true,
-                                              message: 'Please select category',
-                                          },
-                                      ]}
-                            />
-                            <p className={classes.InputText}>Please select category of item</p>
+                            <Form.Item
+                                name="category"
+                                label="Select the category of item"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please select category'
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Cars"
+                                    allowClear
+                                    onChange={(value) => {
+                                        setFormData((prevState) => ({
+                                                ...prevState,
+                                                ['category_id']: value
+                                            }
+                                        ));
+                                    }}
+                                >
+                                    {categories.length !== 0 ?
+                                        categories.map((el) => {
+                                            return <Option value={el.id}>{el.category}</Option>
+                                        }) : null
+                                    }
+                                </Select>
+                            </Form.Item>
                         </Col>
                         <Col md={7}>
-                            <p className={classes.InputTitle}><span>*</span> Please add short description of your item:
+
+                            <Form.Item
+                                name="name"
+                                label="Please add short description of your item:
                                 (e.g.
-                                Honda Accord 2013 for bartering)</p>
-                            <Input className="w-100"
-                                   onChange={onChange}
-                                   placeholder="Honda Accord 2013 for bartering"
-                                   name="name"
-                                   value={formData.name}
-                                   required
-                            />
-                            <p className={classes.InputText}>Please add short description of your item</p>
+                                Honda Accord 2013 for bartering)"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please add short description of your item'
+                                    },
+                                ]}
+                            >
+                                <Input className="w-100"
+                                       onChange={onChange}
+                                       placeholder="Honda Accord 2013 for bartering"
+                                       name="name"
+                                       value={formData.name}
+                                />
+                            </Form.Item>
                         </Col>
                         <Col md={6}>
                             <Row>
                                 <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> Input the year of your car</p>
-                                    <Cascader className="w-100"
-                                              options={itemYear}
-                                              onChange={(value) =>{
-                                                  setFormData((prevState) => ({
-                                                      ...prevState,
-                                                      ['year']: value[0]
-                                                  }));
-                                              }}
-                                              placeholder="2011"
-                                              name="year"
-                                              value={formData.year}
-                                              rules={[
-                                                  {
-                                                      required: true,
-                                                      message: 'Please select car year',
-                                                  },
-                                              ]}
-                                    />
+                                    <Form.Item
+                                        name="year"
+                                        label="Input the year of your car"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please select car year'
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder="2011"
+                                            allowClear
+                                            onChange={(value) => {
+                                                setFormData((prevState) => ({
+                                                    ...prevState,
+                                                    ['year']: value
+                                                }));
+                                            }}
+                                        >
+                                            {itemYear.length !== 0 ?
+                                                itemYear.map((el) => {
+                                                    return <Option value={el.value}>{el.label}</Option>
+                                                }) : null
+                                            }
+                                        </Select>
+                                    </Form.Item>
                                     <p className={classes.InputText}>Please enter the year of your car</p>
                                 </Col>
                                 <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> Input the milage of your car (km)
-                                    </p>
-                                    <Input className="w-100"
-                                           onChange={onChange}
-                                           placeholder="198,000"
-                                           type="number"
-                                           name="milage"
-                                           value={formData.milage}
-                                           required
-                                    />
-                                    <p className={classes.InputText}>Please enter the milage of your car</p>
+                                    <Form.Item
+                                        name="milage"
+                                        label="Input the milage of your car (km)"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please enter the milage of your car'
+                                            },
+                                        ]}
+                                    >
+                                        <Input className="w-100"
+                                               onChange={onChange}
+                                               placeholder="198,000"
+                                               type="number"
+                                               name="milage"
+                                               value={formData.milage}
+                                        />
+                                    </Form.Item>
                                 </Col>
                                 <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> Select the car brand</p>
-                                    <Cascader className="w-100"
-                                              options={carBrand}
-                                              onChange={(value) =>{
-                                                  setSelectedBrandId(value[0]);
-                                                  setFormData((prevState) => ({
-                                                      ...prevState,
-                                                      ['car_brand_id']: value[0]
-                                                  }));
-                                              }}
-                                              placeholder="Chevrolet"
-                                              name="carBrand"
-                                              rules={[
-                                                  {
-                                                      required: true,
-                                                      message: 'Please select car brand',
-                                                  },
-                                              ]}
-                                    />
-                                    <p className={classes.InputText}>Please select car brand</p>
+                                    <Form.Item
+                                        name="carBrand"
+                                        label="Select the car brand"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please select car brand'
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder="Chevrolet"
+                                            allowClear
+                                            onChange={(value) => {
+                                                setSelectedBrandId(value);
+                                                setFormData((prevState) => ({
+                                                    ...prevState,
+                                                    ['car_brand_id']: value,
+                                                }));
+                                            }}
+                                        >
+                                            {carBrands.length !== 0 ?
+                                                carBrands.map((el) => {
+                                                    return <Option value={el.id}>{el.brand}</Option>
+                                                }) : null
+                                            }
+                                        </Select>
+                                    </Form.Item>
                                 </Col>
                                 <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> Select the car model</p>
-                                    <Cascader className="w-100"
-                                              options={carModel}
-                                              onChange={(value) =>{
-                                                  setFormData((prevState) => ({
-                                                      ...prevState,
-                                                      ['car_model']: value[0]
-                                                  }));
-                                              }}
-                                              placeholder="Select car brand first"
-                                              name="CarModel"
-                                              value={formData.car_model}
-                                              rules={[
-                                                  {
-                                                      required: true,
-                                                      message: 'Please select car model',
-                                                  },
-                                              ]}
-                                    />
-                                    <p className={classes.InputText}>Please select category of item</p>
+                                    <Form.Item
+                                        name="CarModel"
+                                        label="Select the car model"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please select car model'
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder="Chevrolet"
+                                            allowClear
+                                            onChange={(value) => {
+                                                setFormData((prevState) => ({
+                                                    ...prevState,
+                                                    ['car_model']: value
+                                                }));
+                                            }}
+                                        >
+                                            {carModels.length !== 0 ?
+                                                carModels.map((el) => {
+                                                    return <Option value={el.id}>{el.model}</Option>
+                                                }) : null
+                                            }
+                                        </Select>
+                                    </Form.Item>
                                 </Col>
                             </Row>
                             <Row>
@@ -375,27 +400,33 @@ function AddItems() {
                             </Row>
                         </Col>
                         <Col md={6}>
-                            <p className={classes.InputTitle}><span>*</span> Please add detailed description of your
-                                item:
-                            </p>
-                            <TextArea
-                                onChange={onChange}
+                            <Form.Item
                                 name="description"
-                                value={formData.description}
-                                required
-                                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque non tempor nunc,
-                                 eleifend pharetra nisl. Fusce faucibus efficitur turpis, quis vehicula massa dictum at.
-                                Proin molestie metus non lectus semper, quis consequat elit tempus. Curabitur ac velit
-                                 lacus. Duis lacinia diam est, et semper lectus suscipit quis. Sed elementum erat
-                                massa, sit amet feugiat tortor vulputate id. Praesent auctor et massa a rutrum. Nam
-                                congue malesuada urna, ut tristique tellus hendrerit a. Mauris in dui orci. Vestibulum
-                                sagittis justo id pellentesque tempor. Vestibulum eu commodo est."
-                                autoSize={{
-                                    minRows: 11,
-                                    maxRows: 11,
-                                }}
-                            />
+                                label="Please add detailed description of your item:"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please add detailed description of your item!'
+                                    },
+                                ]}
+                            >
+                                <TextArea
+                                    onChange={onChange}
+                                    name="description"
+                                    value={formData.description}
+                                    placeholder="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci, atque
+                        consequatur doloribus ducimus magnam provident qui repellat similique vel? Amet aperiam dolorem
+                        dolorum excepturi, expedita illum labore non officia quas, reprehenderit totam ullam, vitae.
+                        Animi consequatur dignissimos, exercitationem incidunt labore libero natus nisi officiis optio
+                        ratione repellendus sapiente velit?"
+                                    autoSize={{
+                                        minRows: 11,
+                                        maxRows: 11,
+                                    }}
+                                />
+                            </Form.Item>
                         </Col>
+
                     </Row>
                     <Row className="flex-wrap justify-content-between mt-2 mt-md-4 align-items-center">
                         <Col md={12} lg={6} className="d-flex align-items-center align-self-baseline">
@@ -430,7 +461,8 @@ function AddItems() {
                                                     setCoastButton(`${coast.toLocaleString("en-US")} AED`)
                                                     setFormData((prevState) => ({
                                                             ...prevState,
-                                                            ['cost']: `${coast}`}
+                                                            ['cost']: `${coast}`
+                                                        }
                                                     ));
                                                 }}
                                         >
@@ -443,7 +475,8 @@ function AddItems() {
                                                     setCoastButton(`${coast.toLocaleString("en-US")} AED`)
                                                     setFormData((prevState) => ({
                                                             ...prevState,
-                                                            ['cost']: `${coast}`}
+                                                            ['cost']: `${coast}`
+                                                        }
                                                     ));
                                                 }}
                                         >
@@ -455,54 +488,76 @@ function AddItems() {
                         <Col md={12} lg={6}>
                             <Row className="flex-wrap mt-3 mt-lg-0">
                                 <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> Select what you want</p>
-                                    <Cascader className="w-100 h-auto"
-                                              options={selectWant}
-                                              rules={[
-                                                  {
-                                                      required: true,
-                                                      message: 'Please select what do you want: Compensation in barter or upgrade item?',
-                                                  },
-                                              ]}
-                                              onChange={(value) => {
-                                                  setWhatYouWant(value);
-                                                  setFormData((prevState) => ({
-                                                      ...prevState,
-                                                      ['cost_type']: value[0]
-                                                  }));
-                                              }}
-                                              value={formData.cost_type}
-                                              name="whatYouWant"
-                                              placeholder="Select"/>
-                                    <p className={classes.InputText}>Please select what do you want: Compensation in
-                                        barter or upgrade item?</p>
+                                    <Form.Item
+                                        name="whatYouWant"
+                                        label="Select what you want"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please select what do you want: Compensation in barter or upgrade item?'
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            placeholder="Select"
+                                            allowClear
+                                            onChange={(value) => {
+                                                setWhatYouWant(value);
+                                                setFormData((prevState) => ({
+                                                    ...prevState,
+                                                    ['cost_type']: value
+                                                }));
+                                            }}
+                                        >
+                                            {selectWant.length !== 0 ?
+                                                selectWant.map((el) => {
+                                                    return <Option value={el.value}>{el.label}</Option>
+                                                }) : null
+                                            }
+                                        </Select>
+                                    </Form.Item>
                                 </Col>
-                                {whatYouWant[0] === 'upgrade' ? <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> How much can you pay for upgrade?
-                                    </p>
-                                    <Input className="w-100"
-                                           onChange={onChange}
-                                           placeholder="198,000"
-                                           type="number"
-                                           name="second_cost"
-                                           value={formData.second_cost}
-                                           required
-                                    />
-                                    <p className={classes.InputText}>Please enter the amount of money in AED</p>
+                                {whatYouWant === 'upgrade' ? <Col md={6}>
+                                    <Form.Item
+                                        name="second_cost"
+                                        label="How much can you pay for upgrade?"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please enter the amount of money in AED'
+                                            },
+                                        ]}
+                                    >
+                                        <Input className="w-100"
+                                               onChange={onChange}
+                                               placeholder="198,000"
+                                               type="number"
+                                               name="second_cost"
+                                               value={formData.second_cost}
+                                        />
+                                    </Form.Item>
                                 </Col> : null}
 
-                                {whatYouWant[0] === 'above' ? <Col md={6}>
-                                    <p className={classes.InputTitle}><span>*</span> How much do you want above item?
-                                    </p>
-                                    <Input className="w-100"
-                                           onChange={onChange}
-                                           placeholder="198,000"
-                                           type="number"
-                                           name="second_cost"
-                                           value={formData.second_cost}
-                                           required
-                                    />
-                                    <p className={classes.InputText}>Please enter the amount of money in AED</p>
+                                {whatYouWant === 'above' ? <Col md={6}>
+                                    <Form.Item
+                                        name="second_cost"
+                                        label="How much do you want above item?"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please enter the above of money in AED'
+                                            },
+                                        ]}
+                                    >
+                                        <Input className="w-100"
+                                               onChange={onChange}
+                                               placeholder="198,000"
+                                               type="number"
+                                               name="second_cost"
+                                               value={formData.second_cost}
+                                               required
+                                        />
+                                    </Form.Item>
                                 </Col> : null}
                             </Row>
                         </Col>
@@ -514,7 +569,7 @@ function AddItems() {
                             {/*</Link>*/}
                         </Col>
                     </Row>
-                </form>
+                </Form>
             </Container>
 
             <Footer/>
