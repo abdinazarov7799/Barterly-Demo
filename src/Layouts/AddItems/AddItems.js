@@ -7,11 +7,11 @@ import {Upload, message, Button, Input, Form, Select} from "antd";
 import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
-import './addItem.css';
 import getCategories from "../../components/fetchData/getCategories";
 import getCarModel from "../../components/fetchData/getCarModel";
 import getCarBrands from "../../components/fetchData/getCarBrands";
 import {Option} from "antd/es/mentions";
+import {useNavigate} from "react-router";
 
 const initialFormData = {
     category_id: '',
@@ -156,6 +156,10 @@ function AddItems() {
             }
         ));
     }
+    const navigate = useNavigate();
+    if (success){
+        navigate('/successeful-page')
+    }
     const onFinish = (e) => {
         if (whatYouWant === 'straight'){
             setFormData((prevState) => ({
@@ -172,18 +176,17 @@ function AddItems() {
             body:  JSON.stringify(formData) })
             .then(response => response.json())
             .then(data => {
-                console.log('Serverdan kelgan javob:', data);
+                console.log('Server answer:', data);
                 setSuccess(data.success);
             })
             .catch(error => {
-                console.error('Xato:', error);
+                console.error('Error:', error);
             });
     }
     return (
         <>
             <NavbarMenu/>
             <Header/>
-
             <Container>
                 <Row>
                     <h1 className={classes.Title}>Place your Advertisement </h1>
@@ -277,7 +280,6 @@ function AddItems() {
                                             }
                                         </Select>
                                     </Form.Item>
-                                    <p className={classes.InputText}>Please enter the year of your car</p>
                                 </Col>
                                 <Col md={6}>
                                     <Form.Item
@@ -364,38 +366,45 @@ function AddItems() {
                                     <Col md={2}>
                                         <p className={classes.InputTitle}><span>*</span> Upload photo:</p>
                                     </Col>
-                                    <Upload
-                                        name="avatar"
-                                        listType="picture-card"
-                                        className="avatar-uploader w-50"
-                                        showUploadList={false}
-                                        action="https://tes.mediasolutions.uz/api.php"
-                                        withCredentials={true}
-                                        beforeUpload={beforeUpload}
-                                        onChange={handleChange}
+
+                                    <Form.Item
+                                        name="image"
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Please upload image',
+                                                message: 'Please upload image'
                                             },
                                         ]}
                                     >
-                                        {imageUrl ? (
-                                            <img
-                                                src={imageUrl}
-                                                alt="avatar"
-                                                style={{
-                                                    width: '100%',
-                                                }}
-                                            />
-                                        ) : (
-                                            uploadButton
-                                        )}
-                                    </Upload>
-                                    <p className={classes.InputText}>
-                                        Recommanded resolution is 1920x1080 with file size less than 2MB, keep visual
-                                        elements centered
-                                    </p>
+                                        <Upload
+                                            name="avatar"
+                                            listType="picture-card"
+                                            className="avatar-uploader w-50"
+                                            showUploadList={false}
+                                            action="https://tes.mediasolutions.uz/api.php"
+                                            withCredentials={true}
+                                            beforeUpload={beforeUpload}
+                                            onChange={handleChange}
+                                        >
+                                            {imageUrl ? (
+                                                <img
+                                                    src={imageUrl}
+                                                    alt="avatar"
+                                                    style={{
+                                                        width: '100%',
+                                                    }}
+                                                />
+                                            ) : (
+                                                uploadButton
+                                            )}
+                                        </Upload>
+                                    </Form.Item>
+                                    <Col md={6}>
+                                        <p className={classes.InputText}>
+                                            Recommanded resolution is 1920x1080 with file size less than 2MB, keep visual
+                                            elements centered
+                                        </p>
+                                    </Col>
                                 </Col>
                             </Row>
                         </Col>
@@ -447,11 +456,21 @@ function AddItems() {
 
                             </Col>
                             <Col md={4} className="d-flex justify-content-end">
+                                <Form.Item
+                                    name="category"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please press the button'
+                                        },
+                                    ]}
+                                >
                                 <Button type="primary"
                                         className={classes.CoastButton}
                                         onClick={coastBtn}>
                                     {coastButton}
                                 </Button>
+                                </Form.Item>
                                 {!textVisible ?
                                     <Col className="ms-1">
                                         <Button type='default'

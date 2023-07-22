@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 import  'bootstrap/dist/css/bootstrap.css' ;
 import './index.css';
 import App from "./Layouts/App";
-import {createBrowserRouter} from "react-router-dom";
 import {RouterProvider} from "react-router";
-import ErrorPage from "./components/errorPage/ErrorPage";
+import ErrorPage from "./Layouts/errorPage/ErrorPage";
 import AddItems from "./Layouts/AddItems/AddItems";
 import SuccessPage from "./Layouts/SuccessefulPage/SuccessPage";
+import {createBrowserRouter} from "react-router-dom";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <ErrorPage />,
     },
     {
-        path: '/addItem/successeful-page',
+        path: '/successeful-page',
         element: <SuccessPage />
 
     }

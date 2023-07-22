@@ -48,7 +48,7 @@ function HeroMenu() {
                     ))}
                 </Menu>
                 <section className="mt-4 mb-2">
-                    <Row className="flex-wrap">
+                    <Row className="flex-wrap py-md-2">
                         {products.map((product) => (
                             <Col xs={12} sm={6} md={4} lg={3} className="px-md-1 px-xl-2">
                                 <Product
