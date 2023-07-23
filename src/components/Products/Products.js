@@ -15,17 +15,17 @@ function Product(props) {
         if (props.cost_type === 'upgrade'){
             setTitleCostType(classes.ProductTitleOrange);
             setCostType(classes.ProductCostOrange);
-            setCostTypeName('User can pay above')
+            setCostTypeName('User can pay above');
         }
         if (props.cost_type === "above"){
             setTitleCostType(classes.ProductTitleGreen);
             setCostType(classes.ProductCostGreen);
-            setCostTypeName('User needs above')
+            setCostTypeName('User needs above');
         }
         if(props.cost_type === "straight"){
             setTitleCostType(classes.ProductTitleBlue);
             setCostType(classes.ProductCostBlue);
-            setCostTypeName('Straight barter')
+            setCostTypeName('Straight barter');
         }
     },[])
     return(

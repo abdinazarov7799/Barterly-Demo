@@ -3,7 +3,7 @@ import Footer from "../../Layouts/footer/Footer";
 import Header from "../../Layouts/header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
-import {Upload, message, Button, Input, Form, Select} from "antd";
+import {Upload, message, Button, Input, Form, Select, Spin} from "antd";
 import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -26,8 +26,6 @@ const initialFormData = {
     cost_type: '',
     description: '',
 }
-
-
 const itemYear = [];
 for (let i = 2023; i >= 2000; i--) {
     itemYear.push(
@@ -160,7 +158,7 @@ function AddItems() {
     if (success){
         navigate('/successeful-page')
     }
-    const onFinish = (e) => {
+    const onFinish = () => {
         if (whatYouWant === 'straight'){
             setFormData((prevState) => ({
                     ...prevState,
@@ -438,8 +436,8 @@ function AddItems() {
 
                     </Row>
                     <Row className="flex-wrap justify-content-between mt-2 mt-md-4 align-items-center">
-                        <Col md={12} lg={6} className="d-flex align-items-center align-self-baseline">
-                            <Col md={8}>
+                        <Col md={12} lg={6} className="d-flex align-items-center align-self-baseline justify-content-between">
+                            <Col md={8} className='pe-5'>
                                 <Col className={textVisible ? classes.DisplayBlock : classes.DisplayNone}>
                                     <p className={classes.InputText} style={{margin: 0}}>In this section you can
                                         estimate the
@@ -453,7 +451,6 @@ function AddItems() {
                                         subtract the value of your
                                         item if it is not correct. You can increase this value max. to 20%.</p>
                                 </Col>
-
                             </Col>
                             <Col md={4} className="d-flex justify-content-end">
                                 <Form.Item
@@ -469,6 +466,14 @@ function AddItems() {
                                         className={classes.CoastButton}
                                         onClick={coastBtn}>
                                     {coastButton}
+                                    {coastButton === 'Loading' ?
+                                        <LoadingOutlined
+                                            style={{
+                                                fontSize: 24,
+                                            }}
+                                            spin
+                                        /> : null
+                                    }
                                 </Button>
                                 </Form.Item>
                                 {!textVisible ?
