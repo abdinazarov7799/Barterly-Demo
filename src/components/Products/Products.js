@@ -12,12 +12,12 @@ function Product(props) {
     const [costTittleType, setTitleCostType] = useState('');
     const [costTypeName, setCostTypeName] = useState('Estimated cost:');
     useEffect(() => {
-        if (props.cost_type === 'upgrade'){
+        if (props.cost_type === 'above'){
             setTitleCostType(classes.ProductTitleOrange);
             setCostType(classes.ProductCostOrange);
             setCostTypeName('User can pay above')
         }
-        if (props.cost_type === "above"){
+        if (props.cost_type === "upgrade"){
             setTitleCostType(classes.ProductTitleGreen);
             setCostType(classes.ProductCostGreen);
             setCostTypeName('User needs above')
