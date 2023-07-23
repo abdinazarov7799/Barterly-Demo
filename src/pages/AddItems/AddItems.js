@@ -1,6 +1,6 @@
-import NavbarMenu from "../../components/header/Navbar/Navbar";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
+import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import Footer from "../../Layouts/footer/Footer";
+import Header from "../../Layouts/header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
 import {Upload, message, Button, Input, Form, Select} from "antd";

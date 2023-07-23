@@ -1,5 +1,5 @@
-.rec-card-title {
-    color: rgba(0, 166, 27, 0.85);
+a {
+    text-decoration: none;
 }
 #card-type{
     position: absolute;

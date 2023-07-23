@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Menu} from "antd";
 import {Col, Container, Row} from "reactstrap";
 import "./HeroMenu.css";
-import Product from "../recProducts/recProduct";
+import Product from "../Products/Products";
 import getCategories from "../fetchData/getCategories";
 import getItems from "../fetchData/getItems";
 
@@ -13,7 +13,7 @@ function HeroMenu() {
     useEffect(() => {
         getItems().then(data => setProducts(data));
         getCategories().then(data => setCategories(data));
-        
+
     }, []);
     const items = [
         {
@@ -63,6 +63,8 @@ function HeroMenu() {
                                     cost={product.cost}
                                     name={product.name}
                                     description={product.description}
+                                    cost_type={product.cost_type}
+                                    second_cost={product.second_cost}
                                 />
                             </Col>
                         ))}

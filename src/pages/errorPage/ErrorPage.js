@@ -1,6 +1,6 @@
-import NavbarMenu from "../../components/header/Navbar/Navbar";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
+import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import Footer from "../../Layouts/footer/Footer";
+import Header from "../../Layouts/header/Header";
 import {Button, Result} from "antd";
 import {Link} from "react-router-dom";
 

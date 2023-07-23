@@ -1,6 +1,6 @@
-import NavbarMenu from "../../components/header/Navbar/Navbar";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import Header from "../../Layouts/header/Header";
+import Footer from "../../Layouts/footer/Footer";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./successfulPage.module.css";
 import Star from '../../assets/images/star.svg';
