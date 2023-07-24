@@ -474,6 +474,7 @@ function AddItems() {
                                             ]}
                                         >
                                             <Button type="primary"
+                                                    name='costBtn'
                                                     className={classes.CoastButton}
                                                     onClick={coastBtn}>
                                                 {coastButton}
