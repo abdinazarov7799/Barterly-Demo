@@ -5,6 +5,7 @@ import {Col, Container, Row} from "reactstrap";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import getItem from "../../components/fetchData/getItem";
+import {Image} from "antd";
 
 function Item() {
     let { id } = useParams();
@@ -12,7 +13,6 @@ function Item() {
     useEffect(()=>{
         getItem(id).then(data => setItemData(data))
     },[])
-    console.log(itemData)
     return(
         <>
             <NavbarMenu />
@@ -21,7 +21,7 @@ function Item() {
                 <Container>
                     <Row>
                         <Col >
-                            <img src={itemData.image} />
+                            <Image src={itemData.image}/>
                         </Col>
                         <Col>
 
