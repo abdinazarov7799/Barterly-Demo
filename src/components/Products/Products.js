@@ -4,6 +4,7 @@ import './Products.css';
 import classes from "./Products.module.css";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
+import React from "react";
 
 
 
@@ -43,9 +44,8 @@ function Product(props) {
                 <span id="card-type">
                     {props.category}
                 </span>
-                    <div
-                        id="products"
-                        style={{backgroundImage: `url("${props.img}")`}}>
+                    <div id="products"
+                         style={{backgroundImage: `url("${props.img}")`}}>
                     </div>
                     <CardBody className="px-0">
                         <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}

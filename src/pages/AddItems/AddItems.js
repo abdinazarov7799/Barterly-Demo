@@ -13,6 +13,7 @@ import getCarBrands from "../../components/fetchData/getCarBrands";
 import {Option} from "antd/es/mentions";
 import {useNavigate} from "react-router";
 import SocialMedia from '../../assets/images/social-media.png';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const initialFormData = {
     category_id: '',
@@ -464,7 +465,7 @@ function AddItems() {
                                     </Col>
                                     <Col md={4} className="d-flex justify-content-end">
                                         <Form.Item
-                                            name="category"
+                                            name="costBtn"
                                             rules={[
                                                 {
                                                     required: true,
@@ -600,7 +601,12 @@ function AddItems() {
                         : <>
                             <Row>
                                 <Col className="d-flex justify-content-center mb-1">
-                                    <img src={SocialMedia} width={256} height={256}/>
+                                    <LazyLoadImage
+                                        effect="opacity"
+                                        width={256}
+                                        height={256}
+                                        src={SocialMedia}
+                                    />
                                 </Col>
                             </Row>
                             <Row className="d-flex justify-content-center">

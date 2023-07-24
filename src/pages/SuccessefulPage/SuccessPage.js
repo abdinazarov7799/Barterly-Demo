@@ -7,6 +7,7 @@ import Star from '../../assets/images/star.svg';
 import {Button} from "antd";
 import {Link} from "react-router-dom";
 import React from "react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 function SuccessPage() {
     return (
@@ -27,7 +28,12 @@ function SuccessPage() {
                 </Row>
                 <Row>
                     <Col className="d-flex justify-content-center mt-5 mb-5">
-                        <img width={256} height={256} src={Star}/>
+                        <LazyLoadImage
+                            effect="opacity"
+                            width={256}
+                            height={256}
+                            src={Star}
+                        />
                     </Col>
                 </Row>
                 <Row className="d-flex justify-content-center">
