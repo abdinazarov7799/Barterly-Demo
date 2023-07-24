@@ -12,7 +12,6 @@ function HeroMenu() {
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    console.log(products)
     useEffect(() => {
         getItems().then(data => {
             setProducts(data);

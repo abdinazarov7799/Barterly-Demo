@@ -13,14 +13,14 @@ function Product(props) {
     const [costTypeName, setCostTypeName] = useState('Estimated cost:');
     useEffect(() => {
         if (props.cost_type === 'upgrade'){
-            setTitleCostType(classes.ProductTitleOrange);
-            setCostType(classes.ProductCostOrange);
+            setTitleCostType(classes.ProductTitleGreen);
+            setCostType(classes.ProductCostGreen);
             setCostTypeName('User can pay above');
         }
         if (props.cost_type === "above"){
-            setTitleCostType(classes.ProductTitleGreen);
-            setCostType(classes.ProductCostGreen);
             setCostTypeName('User needs above');
+            setTitleCostType(classes.ProductTitleOrange);
+            setCostType(classes.ProductCostOrange);
         }
         if(props.cost_type === "straight"){
             setTitleCostType(classes.ProductTitleBlue);
@@ -48,7 +48,7 @@ function Product(props) {
                         style={{backgroundImage: `url("${props.img}")`}}>
                     </div>
                     <CardBody className="px-0">
-                        <Badge.Ribbon text={"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
+                        <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
                                       style={{
                                         color: "#ffffff",
                                         right: "0px",

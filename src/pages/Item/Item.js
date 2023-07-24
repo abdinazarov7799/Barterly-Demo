@@ -1,19 +1,41 @@
-import {useState} from "react";
-import {Image} from "antd";
+import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import Header from "../../Layouts/header/Header";
+import Footer from "../../Layouts/footer/Footer";
+import {Container} from "reactstrap";
+import {Form, Select} from "antd";
+import {Option} from "antd/es/mentions";
 
 function Item(props) {
-    const [visible, setVisible] = useState(false);
     return(
         <>
-            <Image.PreviewGroup
-                preview={{
-                    visible,
-                    onVisibleChange: (vis) => setVisible(vis),
-                }}
-            >
-                <Image src={props.img} />
-                <Image src="https://telegra.ph/file/9f0904ef295ca1f62b0f9.png" />
-            </Image.PreviewGroup>
+            <NavbarMenu />
+            <Header />
+                <Container>
+                    <Form.Item
+                        name="select-multiple"
+                        label="Select[multiple]"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please select your favourite colors!',
+                                type: 'array',
+                            },
+                        ]}
+                    >
+                        <Select mode="multiple"
+                                placeholder="Please select favourite colors"
+                                onChange={(e) => {
+                                    console.log(e)
+                                }}
+                        >
+                            <Option value="red">Red</Option>
+                            <Option value="green">Green</Option>
+                            <Option value="blue">Blue</Option>
+                        </Select>
+                    </Form.Item>
+                </Container>
+
+            <Footer />
         </>
     );
 }
