@@ -464,15 +464,6 @@ function AddItems() {
                                         </Col>
                                     </Col>
                                     <Col md={4} className="d-flex justify-content-end">
-                                        <Form.Item
-                                            name="costBtn"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Please press the button'
-                                                },
-                                            ]}
-                                        >
                                             <Button type="primary"
                                                     name='costBtn'
                                                     className={classes.CoastButton}
@@ -487,7 +478,6 @@ function AddItems() {
                                                     /> : null
                                                 }
                                             </Button>
-                                        </Form.Item>
                                         {!textVisible ?
                                             <Col className="ms-1">
                                                 <Button type='default'
