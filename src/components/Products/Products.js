@@ -2,7 +2,6 @@ import {Card, CardBody, CardSubtitle, CardTitle} from "reactstrap";
 import {Badge} from 'antd';
 import './Products.css';
 import classes from "./Products.module.css";
-import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import React from "react";
 
@@ -31,8 +30,6 @@ function Product(props) {
     },[])
     return(
         <>
-
-            <Link to='/item'>
                 <Card
                     style={{
                         width: '100%',
@@ -73,7 +70,6 @@ function Product(props) {
                         </CardSubtitle>
                     </CardBody>
                 </Card>
-            </Link>
         </>
     );
 }
