@@ -12,6 +12,7 @@ import getCarModel from "../../components/fetchData/getCarModel";
 import getCarBrands from "../../components/fetchData/getCarBrands";
 import {Option} from "antd/es/mentions";
 import {useNavigate} from "react-router";
+import SocialMedia from '../../assets/images/social-media.png';
 
 const initialFormData = {
     category_id: '',
@@ -596,30 +597,41 @@ function AddItems() {
                                 </Col>
                             </Row>
                         </>
-                        : <Form.Item
-                            name="select-multiple"
-                            label="Select[multiple]"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please select your favourite colors!',
-                                    type: 'array',
-                                },
-                            ]}
-                        >
-                            <Select mode="multiple"
-                                    placeholder="Please select favourite colors"
-                                    onChange={(e) => {
-                                        setFormData((prevState) => ({
-                                                ...prevState,
-                                                preferred_categories: e
-                                            }
-                                        ));
-                                    }}
-                            >
-                                {categories.map((el) => <Option value={el.id}>{el.category}</Option>)}
-                            </Select>
-                        </Form.Item>
+                        : <>
+                            <Row>
+                                <Col className="d-flex justify-content-center mb-1">
+                                    <img src={SocialMedia} width={256} height={256}/>
+                                </Col>
+                            </Row>
+                            <Row className="d-flex justify-content-center">
+                                <Col xs={12} md={9} lg={6}>
+                                    <Form.Item
+                                        name="select-multiple"
+                                        label="Select preferred categories for barter your item. You can choose 2 or more categories also:"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please select preferred categories!',
+                                                type: 'array',
+                                            },
+                                        ]}
+                                    >
+                                        <Select mode="multiple"
+                                                placeholder="Please select preferred categories!"
+                                                onChange={(e) => {
+                                                    setFormData((prevState) => ({
+                                                            ...prevState,
+                                                            preferred_categories: e
+                                                        }
+                                                    ));
+                                                }}
+                                        >
+                                            {categories.map((el) => <Option value={el.id}>{el.category}</Option>)}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </>
                     }
                     <Row>
                         <Col md={12} className="d-flex justify-content-center mb-3 mb-md-0">
