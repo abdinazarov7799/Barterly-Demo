@@ -10,6 +10,10 @@ import UserProfile from "../../components/Item/UserProfile";
 import {Button, Image} from "antd";
 import getCategories from "../../components/fetchData/getCategories";
 import {HeartOutlined, RetweetOutlined} from "@ant-design/icons";
+import Logo from '../../assets/logos/Слой 1.svg';
+import './item.css'
+import Sider from "../../Layouts/Sider/Sider";
+
 
 function Item() {
     let { id } = useParams();
@@ -42,7 +46,6 @@ function Item() {
                                         }
                                     })}
                                    </span>
-                                    <Image style={{opacity: 0}} src={image} />
                                 </div>
                                 <Row className="mt-2 mb-3">
                                     <Col md={6}>
@@ -63,16 +66,46 @@ function Item() {
                                     {/*        return  cat.category*/}
                                     {/*    }*/}
                                     {/*})}</p>*/}
+                                    <p>Cars, Electronics, Properties</p>
+                                </Row>
+                                <Row>
+                                    <h1 className={classes.Title}>Specifications</h1>
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <p>Release year: {itemData.year}</p>
+                                        <p>Generation: VI restyling (2017-2023)</p>
+                                        <p>Mileage: {itemData.milage} km</p>
+                                        <p>Mileage: {itemData.milage}</p>
+                                        <p>Mileage history: 2 records in the report</p>
+                                        <p>PTS: Original</p>
+                                        <p>Title owners: 1</p>
+                                        <p>Condition: not broken</p>
+                                        <p>Modification: 2.3 AT (317 hp)</p>
+                                        <p>Engine size: 2.3 l</p>
+                                    </Col>
+                                    <Col md={6}>
+                                        <p>Engine type: Gasoline</p>
+                                        <p>Drive: Rear</p>
+                                        <p>Body type: Convertible</p>
+                                        <p>Color: Purple</p>
+                                        <p>Steering wheel: left</p>
+                                        <p>VIN or body number: 1FAT*************</p>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <h1 className={classes.Title}>Description of item</h1>
+                                    <p>{itemData.description}</p>
                                 </Row>
                             </Col>
                             <Col md={4}>
                                 <h1 className={classes.Title}>Est.: <span style={{color: '#0A6FB7'}}>~{Number(itemData.cost).toLocaleString("en-US") + " AED"}</span></h1>
-                                <UserProfile />
+                                <UserProfile cost_type={itemData.cost_type} second_cost={itemData.second_cost}/>
                             </Col>
                         </Row>
                         </Col>
-                        <Col md={2} id={classes.Sider}>
-                            <h1 className="text-white text-center">Barterly</h1>
+                        <Col md={2} >
+                            <Sider />
                         </Col>
                     </Row>
                 </Container>
