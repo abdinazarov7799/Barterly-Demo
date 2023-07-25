@@ -81,12 +81,12 @@ function Item() {
                                     <div className="d-block d-md-none mb-3"><h1
                                         className={classes.Title}>{itemData.name}</h1></div>
                                     <Row className="mt-2 mb-3">
-                                        <Col md={6} className="mb-2 mb-md-0">
+                                        <Col xs={6} className="mb-2 mb-md-0">
                                             <Button type={"ghost"} className={classes.Buttons}>
                                                 <HeartOutlined/>Add to your favorites
                                             </Button>
                                         </Col>
-                                        <Col md={6}>
+                                        <Col xs={6}>
                                             <Button type={"ghost"} className={classes.Buttons}>
                                                 <RetweetOutlined/>Compare
                                             </Button>

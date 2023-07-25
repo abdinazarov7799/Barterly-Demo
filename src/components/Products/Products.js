@@ -46,7 +46,7 @@ function Product(props) {
                     </div>
                     <CardBody className="px-0 py-2">
                         <div className="d-none d-md-block">
-                            <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
+                            <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost).toLocaleString("en-US") + " AED" : "~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
                                           style={{
                                               color: "#ffffff",
                                               right: "0px",
@@ -56,7 +56,7 @@ function Product(props) {
                             </Badge.Ribbon>
                         </div>
                         <div className="d-block d-md-none">
-                            <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
+                            <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost).toLocaleString("en-US") + " AED" :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
                                           style={{
                                               color: "#ffffff",
                                               left: "0px",
