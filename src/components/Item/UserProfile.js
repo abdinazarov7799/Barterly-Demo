@@ -39,7 +39,7 @@ function UserProfile(props) {
                     <Col xs={4} md={12} className="d-flex justify-content-start justify-content-md-center">
                         <img src={UserIcon} width={100} height={100}/>
                     </Col>
-                    <Col xs={6} md={12} className="text-center">
+                    <Col xs={8} md={12} className="text-center">
                         <span className="d-none d-md-block"><h2 className={classes.Title}>AMIR AUTO LLC</h2></span>
                         <h1 className='d-block d-md-none'>AMIR AUTO LLC</h1>
                         <span className="d-none d-md-block"><p className={classes.SubTitle}>Entity, On Barterly from 2023</p></span>

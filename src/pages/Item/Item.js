@@ -12,6 +12,7 @@ import getCategories from "../../components/fetchData/getCategories";
 import {HeartOutlined, RetweetOutlined} from "@ant-design/icons";
 import './item.css'
 import CustomSider from "../../components/Sider/Sider";
+import Loading from "../../components/Loading/Loading";
 
 
 function Item() {
@@ -19,12 +20,23 @@ function Item() {
     const [itemData, setItemData] = useState({});
     const [categories, setCategories] = useState([]);
     const {image} = itemData;
+    const [isLoading, setIsLoading] = useState(true);
     // const { preferred_categories } = itemData;
     // let preferred_category = preferred_categories.split(',');
     useEffect(() => {
         getItem(id).then(data => setItemData(data))
         getCategories().then(data => setCategories(data));
-    }, [])
+    }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            const item = await getItem(id);
+            const cats = await getCategories();
+            setItemData(item);
+            setCategories(cats);
+            setIsLoading(false);
+        };
+        fetchData();
+    }, [id]);
     // useEffect(() =>{
     //     preferred_categories.map((cat) => {
     //         categories.map((el) => {
@@ -35,6 +47,9 @@ function Item() {
     //
     //     })
     // },[])
+    if (isLoading) {
+        return <Loading />; // Render loading component while data is being fetched
+    }
     return (
         <>
             <NavbarMenu/>

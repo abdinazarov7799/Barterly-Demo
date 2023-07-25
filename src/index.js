@@ -3,38 +3,25 @@ import ReactDOM from 'react-dom/client';
 import  'bootstrap/dist/css/bootstrap.css' ;
 import './index.css';
 import App from "./pages/Home/App";
-import {RouterProvider} from "react-router";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import AddItems from "./pages/AddItems/AddItems";
 import SuccessPage from "./pages/SuccessefulPage/SuccessPage";
-import {createBrowserRouter} from "react-router-dom";
 import Item from "./pages/Item/Item";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App />
-    },
-    {
-        path: "/addItems",
-        element: <AddItems />,
-    },
-    {
-        path: "*",
-        element: <ErrorPage />,
-    },
-    {
-        path: '/successeful-page',
-        element: <SuccessPage />
-    },
-    {
-        path: '/product/:id',
-        element: <Item />
-    }
-]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <Router>
+            <ScrollToTop />
+            <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="/addItems" element={<AddItems />} />
+                <Route path="/successeful-page" element={<SuccessPage />} />
+                <Route path="/product/:id" element={<Item />} />
+                <Route path="*" element={<ErrorPage />} />
+            </Routes>
+        </Router>
+    </React.StrictMode>
 );

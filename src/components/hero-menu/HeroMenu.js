@@ -57,7 +57,7 @@ function HeroMenu() {
                     <Row className="flex-wrap py-md-2">
                         {!loading ?
                             products.map((product) => (
-                                    <Col xs={12} sm={6} md={4} lg={3} className="px-md-1 px-xl-2">
+                                    <Col xs={6} sm={6} md={4} lg={3} className="px-md-1 px-xl-2">
                                         <Link to={`/product/${product.id}`}>
                                             <Product
                                                 category_id={product.category_id}
