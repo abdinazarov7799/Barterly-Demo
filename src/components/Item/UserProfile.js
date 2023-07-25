@@ -56,10 +56,10 @@ function UserProfile(props) {
                         <Button className={classes.MakeBtn} type={"ghost"} onClick={showModal}>Make an offer</Button>
                     </Col>
                     <Row className='d-flex flex-wrap'>
-                        <Col xs={6} md={12}>
+                        <Col xs={12} md={12}>
                             <Button className={classes.Btn} type={"ghost"}>Go to 58 user ads</Button>
                         </Col>
-                        <Col xs={6} md={12}>
+                        <Col xs={12} md={12}>
                             <Button className={classes.Btn} type={"ghost"}>Subscribe to this user</Button>
                         </Col>
                     </Row>
