@@ -44,20 +44,36 @@ function Product(props) {
                     <div id="products"
                          style={{backgroundImage: `url("${props.img}")`}}>
                     </div>
-                    <CardBody className="px-0">
-                        <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
-                                      style={{
-                                        color: "#ffffff",
-                                        right: "0px",
-                                        top: "1px"}}
-                                      className={costType}
-                        >
-                        </Badge.Ribbon>
+                    <CardBody className="px-0 py-2">
+                        <div className="d-none d-md-block">
+                            <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
+                                          style={{
+                                              color: "#ffffff",
+                                              right: "0px",
+                                              top: "1px"}}
+                                          className={costType}
+                            >
+                            </Badge.Ribbon>
+                        </div>
+                        <div className="d-block d-md-none">
+                            <Badge.Ribbon text={props.cost_type === 'straight' ? "est: ~" + Number(props.cost) :"~" + Number(props.second_cost).toLocaleString("en-US") + " AED"}
+                                          style={{
+                                              color: "#ffffff",
+                                              left: "0px",
+                                              right: '0',
+                                              top: "23px",
+                                              fontSize: '16px',
+                                              textAlign: "center"
+                                          }}
+                                          className={costType}
+                            >
+                            </Badge.Ribbon>
+                        </div>
                         <CardTitle tag="h6" className={costTittleType}>
                             {costTypeName}
                         </CardTitle>
                         <CardSubtitle
-                            className="mb-2 mt-3"
+                            className="mb-2 mt-4 mt-md-0 pt-2 pt-md-0"
                             tag="h6"
                         >
                             {props.name}
@@ -66,7 +82,7 @@ function Product(props) {
                             className="mb-2 text-muted"
                             tag="h6"
                         >
-                            {props.description}
+                            Year: {props.year} • KM: {Number(props.milage).toLocaleString("en-US")}
                         </CardSubtitle>
                     </CardBody>
                 </Card>

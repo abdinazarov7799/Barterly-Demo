@@ -70,7 +70,8 @@ function HeroMenu() {
                                                 img={product.image}
                                                 cost={product.cost}
                                                 name={product.name}
-                                                description={product.description}
+                                                year={product.year}
+                                                milage={product.milage}
                                                 cost_type={product.cost_type}
                                                 second_cost={product.second_cost}
                                             />
