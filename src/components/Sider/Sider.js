@@ -2,7 +2,7 @@ import Logo from "../../assets/logos/Слой 1.svg";
 import classes from "./Sider.module.css";
 
 
-function Sider() {
+function CustomSider() {
     return(
         <>
             <div className={classes.Sider}>
@@ -11,4 +11,4 @@ function Sider() {
         </>
     );
 }
-export default Sider
+export default CustomSider;
