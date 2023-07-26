@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography } from 'antd';
-
+import classes from "./GradualBarterBanner.module.css";
+import {Col} from "reactstrap";
 const { Title, Paragraph } = Typography;
 
 const GradualBarter = () => {
@@ -50,7 +51,9 @@ const GradualBarter = () => {
                         <li>Make the trade and repeat the process until you've traded up to your desired item.</li>
                     </ul>
                 </Paragraph>
-                <Button type="primary" size="large">Start Your Gradual Barter Journey Now</Button>
+                    <Col xs={12} md={10}>
+                        <Button type="primary" className={classes.Btn} size="large">Start Your Gradual Barter Journey Now</Button>
+                    </Col>
             </div>
             <img src="https://tes.mediasolutions.uz/gradual-barter.svg" alt="Gradual Barter" style={imageStyles} />
         </div>
