@@ -24,10 +24,6 @@ function Item() {
     // const { preferred_categories } = itemData;
     // let preferred_category = preferred_categories.split(',');
     useEffect(() => {
-        getItem(id).then(data => setItemData(data))
-        getCategories().then(data => setCategories(data));
-    }, []);
-    useEffect(() => {
         const fetchData = async () => {
             const item = await getItem(id);
             const cats = await getCategories();

@@ -48,7 +48,7 @@ const selectWant = [
     },
     {
         value: 'straight',
-        label: 'Straight barter',
+        label: 'Straight GradualBarterBanner',
     }
 ];
 
@@ -521,7 +521,7 @@ function AddItems() {
                                                 rules={[
                                                     {
                                                         required: true,
-                                                        message: 'Please select what do you want: Compensation in barter or upgrade item?'
+                                                        message: 'Please select what do you want: Compensation in GradualBarterBanner or upgrade item?'
                                                     },
                                                 ]}
                                             >

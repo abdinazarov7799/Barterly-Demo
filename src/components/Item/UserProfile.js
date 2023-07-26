@@ -3,11 +3,13 @@ import UserIcon from '../../assets/images/icons/user-icon.svg';
 import classes from "./UserProfile.module.css";
 import {Button, Modal} from "antd";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router";
 
 
 function UserProfile(props) {
     const [costType, setCostType] = useState('');
     const [costClass, setCostClass] = useState();
+    const navigate = useNavigate();
     useEffect(() => {
         if (props.cost_type === 'above') {
             setCostType('Needs: ')
@@ -18,7 +20,7 @@ function UserProfile(props) {
             setCostClass(classes.Green);
         }
         if (props.cost_type === 'straight') {
-            setCostType('Straight barter')
+            setCostType('Straight GradualBarterBanner')
             setCostClass(classes.Blue);
         }
     })
@@ -28,6 +30,7 @@ function UserProfile(props) {
     };
     const handleOk = () => {
         setIsModalOpen(false);
+        navigate('/addItems')
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -47,10 +50,10 @@ function UserProfile(props) {
                     </Col>
                 </Col>
 
-               <Col>
-                   <p className={classes.Price}>{costType}{props.cost_type !== 'straight' ? <span
-                       className={costClass}>{Number(props.second_cost).toLocaleString("en-US") + " AED"}</span> : null}</p>
-               </Col>
+                <Col>
+                    <p className={classes.Price}>{costType}{props.cost_type !== 'straight' ? <span
+                        className={costClass}>{Number(props.second_cost).toLocaleString("en-US") + " AED"}</span> : null}</p>
+                </Col>
                 <Col xs={12} md={12}>
                     <Col xs={12}>
                         <Button className={classes.MakeBtn} type={"ghost"} onClick={showModal}>Make an offer</Button>
@@ -63,8 +66,10 @@ function UserProfile(props) {
                             <Button className={classes.Btn} type={"ghost"}>Subscribe to this user</Button>
                         </Col>
                     </Row>
-                    <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <p>Some contents...</p>
+                    <Modal title="Please add a new item" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                        <p>Oops, it seems like you currently don't have any items available for bartering. To
+                            participate in the barter exchange, please add a new item in a suitable category. Once your
+                            item is added, you'll be all set to swap, trade, and barter away. Let's get trading!</p>
                     </Modal>
                 </Col>
             </Col>

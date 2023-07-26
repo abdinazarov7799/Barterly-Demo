@@ -25,7 +25,7 @@ function Product(props) {
         if(props.cost_type === "straight"){
             setTitleCostType(classes.ProductTitleBlue);
             setCostType(classes.ProductCostBlue);
-            setCostTypeName('Straight barter');
+            setCostTypeName('Straight GradualBarterBanner');
         }
     },[])
     return(

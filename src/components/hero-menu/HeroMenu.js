@@ -6,6 +6,8 @@ import Product from "../Products/Products";
 import getCategories from "../fetchData/getCategories";
 import getItems from "../fetchData/getItems";
 import {Link} from "react-router-dom";
+import FilterItem from "../FilterItem/FilterItem";
+import GradualBarter from "../GradualBarterBanner/GradualBarterBanner";
 
 
 
@@ -20,39 +22,13 @@ function HeroMenu() {
         });
         getCategories().then(data => setCategories(data));
     }, []);
-    const items = [
-        {
-            label: 'Recommendations',
-            key: 'recommendations',
-            count: 98,
-        },
-        {
-            label: 'Newest',
-            key: 'newest',
-            count: 99
-        },
-        {
-            label: 'Nearby',
-            key: 'nearby',
-            count: 56
-        },
-    ];
-    const [current, setCurrent] = useState('recommendations');
+
 
     return(
         <>
             <Container className="mt-4">
-
-                <Menu onClick={(e) => {
-                    setCurrent(e.key);
-                }} selectedKeys={[current]} mode="horizontal">
-                    {items.map((item) => (
-                        <Menu.Item key={item.key}>
-                            <span className="me-2">{item.label}</span>
-                            <span id="menu-badge">{item.count}</span>
-                        </Menu.Item>
-                    ))}
-                </Menu>
+                <GradualBarter />
+                <FilterItem />
                 <section className="mt-4 mb-2">
                     <Row className="flex-wrap py-md-2">
                         {!loading ?
