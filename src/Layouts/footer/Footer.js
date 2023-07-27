@@ -1,10 +1,10 @@
 import classes from './footer.module.css';
 import {Col, Container, Row} from "reactstrap";
-import HomeImg from '../../assets/images/icons/home.svg'
-import FlagImg from '../../assets/images/icons/flag.svg'
-import PlusImg from '../../assets/images/icons/Plus.svg'
-import SmileImg from '../../assets/images/icons/smile.svg'
-import MessageImg from '../../assets/images/icons/message.svg'
+import HomeImg from '../../assets/icons/home.svg'
+import FlagImg from '../../assets/icons/flag.svg'
+import PlusImg from '../../assets/icons/Plus.svg'
+import SmileImg from '../../assets/icons/smile.svg'
+import MessageImg from '../../assets/icons/message.svg'
 import {Link} from "react-router-dom";
 
 function Footer() {

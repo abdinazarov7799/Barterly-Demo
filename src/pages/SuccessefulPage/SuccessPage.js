@@ -3,7 +3,7 @@ import Header from "../../Layouts/header/Header";
 import Footer from "../../Layouts/footer/Footer";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./successfulPage.module.css";
-import Star from '../../assets/images/star.svg';
+import Star from '../../assets/icons/star.svg';
 import {Button} from "antd";
 import {Link} from "react-router-dom";
 import React from "react";

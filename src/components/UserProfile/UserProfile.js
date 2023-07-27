@@ -1,5 +1,5 @@
 import {Col, Row} from "reactstrap";
-import UserIcon from '../../assets/images/icons/user-icon.svg';
+import UserIcon from '../../assets/icons/user-icon.svg';
 import classes from "./UserProfile.module.css";
 import {Button, Modal} from "antd";
 import {useEffect, useState} from "react";

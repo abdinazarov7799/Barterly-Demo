@@ -12,7 +12,7 @@ import getCarModel from "../../components/fetch/getCarModel";
 import getCarBrands from "../../components/fetch/getCarBrands";
 import {Option} from "antd/es/mentions";
 import {useNavigate} from "react-router";
-import SocialMedia from '../../assets/images/social-media.png';
+import SocialMedia from '../../assets/icons/social-media.png';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const initialFormData = {
