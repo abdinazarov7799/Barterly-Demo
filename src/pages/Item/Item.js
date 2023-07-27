@@ -13,7 +13,7 @@ import {HeartOutlined, RetweetOutlined} from "@ant-design/icons";
 import './item.css'
 import CustomSider from "../../components/Sider/Sider";
 import Loading from "../../components/Loading/Loading";
-import useFavoritesCount from "../../Store/useFavoritesCount";
+import useFavoritesCount from "../../Store/useFavorites";
 
 
 function Item() {

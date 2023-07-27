@@ -6,12 +6,13 @@ import LogoDefoult from '../../assets/logos/logo-barterly@3000px 1.svg';
 import React, {useEffect, useState} from "react";
 import getCategories from "../../components/fetch/getCategories";
 import {Link} from "react-router-dom";
-import useFavoritesCount from "../../Store/useFavoritesCount";
+import useFavoritesCount from "../../Store/useFavorites";
+import FavoritesDrawer from "../../components/FavoritesDrawer/FavoritesDrawer";
 
 
 function Header() {
     const [categories, setCategories] = useState([]);
-    const {count} = useFavoritesCount();
+    const {count , show} = useFavoritesCount();
     useEffect(() => {
         getCategories().then(data => setCategories(data));
     }, []);
@@ -19,6 +20,7 @@ function Header() {
         <>
             <section id="header">
                 <Container>
+                    <FavoritesDrawer />
                     <Row className="align-items-center justify-content-between">
                         <Col xs={6} md={6} lg={2} className="me-md-4">
                             <Link to='/'>
@@ -27,15 +29,18 @@ function Header() {
                         </Col>
 
                         <Col xs={6} md={3} className="d-flex justify-content-end align-content-center d-lg-none">
-                            <div style={{
+                            <div onClick={show} style={{
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                marginRight: "10px"
+                                marginRight: "10px",
+                                cursor: "pointer"
                             }}>
                                 <HeartOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
                                 <p style={{fontSize: "14px", margin: 0}}>Favorites</p>
                             </div>
+                            <Badge onClick={show} count={count} style={{right: "35px", top: "-5px"}}>
+                        </Badge>
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -71,16 +76,19 @@ function Header() {
                         </Col>
                         <Col lg={2} id="icons"
                              className="d-flex justify-content-between align-content-center d-sm-none d-lg-flex">
-                            <Badge count={count} style={{right: "14px"}}>
-                            <div style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center"
-                            }}>
+                            <div>
+                                <div onClick={show} style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    cursor: "pointer"
+                                }}>
                                     <HeartOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
                                     <p style={{fontSize: "14px", margin: 0}}>Favorites</p>
+                                </div>
+                                <Badge onClick={show} count={count} style={{right: "-33px", top: '-58px'}}>
+                                </Badge>
                             </div>
-                            </Badge>
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
