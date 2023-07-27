@@ -4,7 +4,7 @@ import  'bootstrap/dist/css/bootstrap.css' ;
 import './index.css';
 import App from "./pages/Home/App";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import ErrorPage from "./pages/errorPage/ErrorPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import AddItems from "./pages/AddItems/AddItems";
 import SuccessPage from "./pages/SuccessefulPage/SuccessPage";
 import Item from "./pages/Item/Item";
