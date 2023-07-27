@@ -1,6 +1,6 @@
 import {Link, useParams} from "react-router-dom";
 import Header from "../../Layouts/header/Header";
-import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import NavbarMenu from "../../Layouts/Navbar/Navbar";
 import Footer from "../../Layouts/footer/Footer";
 import {Col, Container, Row} from "reactstrap";
 import Product from "../../components/Products/Products";

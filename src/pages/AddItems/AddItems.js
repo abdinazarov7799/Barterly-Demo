@@ -1,4 +1,4 @@
-import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import NavbarMenu from "../../Layouts/Navbar/Navbar";
 import Footer from "../../Layouts/footer/Footer";
 import Header from "../../Layouts/header/Header";
 import {Col, Container, Row} from "reactstrap";

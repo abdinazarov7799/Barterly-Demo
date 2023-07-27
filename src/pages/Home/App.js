@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import NavbarMenu from "../../Layouts/Navbar/Navbar";
 import Header from "../../Layouts/header/Header";
 import Banner from "../../components/banner/Banner";
 import Categories from "../../components/categories/Categories";

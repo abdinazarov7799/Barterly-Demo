@@ -1,4 +1,4 @@
-import NavbarMenu from "../../Layouts/header/Navbar/Navbar";
+import NavbarMenu from "../../Layouts/Navbar/Navbar";
 import Header from "../../Layouts/header/Header";
 import Footer from "../../Layouts/footer/Footer";
 import {Col, Container, Row} from "reactstrap";
@@ -6,17 +6,20 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import getItem from "../../components/fetch/getItem";
 import classes from "./Item.module.css";
-import UserProfile from "../../components/Item/UserProfile";
+import UserProfile from "../../components/UserProfile/UserProfile";
 import {Button} from "antd";
 import getCategories from "../../components/fetch/getCategories";
 import {HeartOutlined, RetweetOutlined} from "@ant-design/icons";
 import './item.css'
 import CustomSider from "../../components/Sider/Sider";
 import Loading from "../../components/Loading/Loading";
+import useFavoritesCount from "../../Store/useFavoritesCount";
 
 
 function Item() {
     let {id} = useParams();
+    const { increment , decrement } = useFavoritesCount();
+    const [isClicked, setIsClicked] = useState(false);
     const [itemData, setItemData] = useState({});
     const [categories, setCategories] = useState([]);
     const {image} = itemData;
@@ -78,7 +81,7 @@ function Item() {
                                         className={classes.Title}>{itemData.name}</h1></div>
                                     <Row className="mt-2 mb-3">
                                         <Col xs={6} className="mb-2 mb-md-0">
-                                            <Button type={"ghost"} className={classes.Buttons}>
+                                            <Button type={"ghost"} className={classes.Buttons} onClick={() => {!isClicked ? increment() : decrement(); setIsClicked(!isClicked)}}>
                                                 <HeartOutlined/>Add to your favorites
                                             </Button>
                                         </Col>
