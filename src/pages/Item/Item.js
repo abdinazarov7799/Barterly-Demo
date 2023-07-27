@@ -4,11 +4,11 @@ import Footer from "../../Layouts/footer/Footer";
 import {Col, Container, Row} from "reactstrap";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import getItem from "../../components/fetchData/getItem";
+import getItem from "../../components/fetch/getItem";
 import classes from "./Item.module.css";
 import UserProfile from "../../components/Item/UserProfile";
 import {Button} from "antd";
-import getCategories from "../../components/fetchData/getCategories";
+import getCategories from "../../components/fetch/getCategories";
 import {HeartOutlined, RetweetOutlined} from "@ant-design/icons";
 import './item.css'
 import CustomSider from "../../components/Sider/Sider";

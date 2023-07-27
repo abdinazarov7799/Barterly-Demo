@@ -7,9 +7,9 @@ import {Upload, message, Button, Input, Form, Select, Spin} from "antd";
 import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
-import getCategories from "../../components/fetchData/getCategories";
-import getCarModel from "../../components/fetchData/getCarModel";
-import getCarBrands from "../../components/fetchData/getCarBrands";
+import getCategories from "../../components/fetch/getCategories";
+import getCarModel from "../../components/fetch/getCarModel";
+import getCarBrands from "../../components/fetch/getCarBrands";
 import {Option} from "antd/es/mentions";
 import {useNavigate} from "react-router";
 import SocialMedia from '../../assets/images/social-media.png';
@@ -107,8 +107,7 @@ function AddItems() {
             const formData = new FormData();
             formData.append('image', info.file.originFileObj);
 
-            // Make the POST request using the 'fetch' API or any other method you prefer
-            fetch('https://tes.mediasolutions.uz/api.php', {
+            fetch(process.env.REACT_APP_FORM_POST_API, {
                 method: 'POST',
                 credentials: 'include',
                 body: formData,
@@ -171,7 +170,7 @@ function AddItems() {
             ));
         }
         if (next){
-            fetch('https://tes.mediasolutions.uz/api.php', {
+            fetch(process.env.REACT_APP_FORM_POST_API, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -640,7 +639,6 @@ function AddItems() {
                     </Row>
                 </Form>
             </Container>
-
             <Footer/>
         </>
     );

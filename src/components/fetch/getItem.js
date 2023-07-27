@@ -1,10 +1,11 @@
-function getItems() {
+
+function getItem(id) {
     return(
-        fetch('https://tes.mediasolutions.uz/api.php?action=items')
+        fetch(process.env.REACT_APP_ITEM_API + id)
             .then(response => response.json())
             .catch((err) => {
                 console.log(err)
             })
     )
 }
-export default getItems;
+export default getItem;

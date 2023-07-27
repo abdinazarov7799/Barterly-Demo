@@ -1,6 +1,6 @@
 function getCarModel(brand_id) {
     return(
-        fetch(`https://tes.mediasolutions.uz/api.php?action=car_models&brand_id=${brand_id}`)
+        fetch(process.env.REACT_APP_CAR_MODELS_API + brand_id)
             .then(response => response.json())
             .catch((err) => {
                 console.log(err)

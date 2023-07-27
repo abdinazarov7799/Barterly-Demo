@@ -1,6 +1,6 @@
 function getCategories() {
     return(
-        fetch('https://tes.mediasolutions.uz/api.php?action=categories')
+        fetch(process.env.REACT_APP_CATEGORIES_API)
             .then(response => response.json())
             .catch((err) => {
                 console.log(err)

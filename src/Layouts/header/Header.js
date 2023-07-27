@@ -4,7 +4,7 @@ import {Dropdown, Menu, Space} from "antd";
 import {DownOutlined, HeartOutlined, PushpinOutlined} from "@ant-design/icons";
 import LogoDefoult from '../../assets/logos/logo-barterly@3000px 1.svg';
 import React, {useEffect, useState} from "react";
-import getCategories from "../../components/fetchData/getCategories";
+import getCategories from "../../components/fetch/getCategories";
 import {Link} from "react-router-dom";
 
 

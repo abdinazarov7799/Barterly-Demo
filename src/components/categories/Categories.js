@@ -10,7 +10,7 @@ import furniture from "../../assets/images/categories/furniture.png";
 import clothes from "../../assets/images/categories/clothes.png";
 import animals from "../../assets/images/categories/animals.png";
 import {useEffect, useState} from "react";
-import getCategories from "../fetchData/getCategories";
+import getCategories from "../fetch/getCategories";
 
 const initialCategoryData = [
     {
