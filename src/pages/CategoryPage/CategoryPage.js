@@ -1,7 +1,7 @@
 import {Link, useParams} from "react-router-dom";
-import Header from "../../Layouts/header/Header";
+import Header from "../../Layouts/Header/Header";
 import NavbarMenu from "../../Layouts/Navbar/Navbar";
-import Footer from "../../Layouts/footer/Footer";
+import Footer from "../../Layouts/Footer/Footer";
 import {Col, Container, Row} from "reactstrap";
 import Product from "../../components/Products/Products";
 import {Spin} from "antd";
