@@ -3,7 +3,7 @@ import Footer from "../../Layouts/Footer/Footer";
 import Header from "../../Layouts/Header/Header";
 import {Col, Container, Row} from "reactstrap";
 import classes from "./addItem.module.css";
-import {Upload, message, Button, Input, Form, Select, Spin} from "antd";
+import {Upload, message, Button, Input, Form, Select, Spin, notification} from "antd";
 import React, {useEffect, useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -69,6 +69,14 @@ function AddItems() {
         Number(Math.round((Math.floor(Math.random() * (30000 - 20000)) + 20000) / 100) * 100));
     const [whatYouWant, setWhatYouWant] = useState([])
     const [selectedBrandId, setSelectedBrandId] = useState();
+    const [api, contextHolder] = notification.useNotification();
+    const openNotificationWithIcon = (type) => {
+        api[type]({
+            message: 'Error',
+            description:
+                'You can only upload a car image. Please try again',
+        });
+    };
     useEffect(() => {
         getCategories().then(data => setCategories(data));
         getCarModel(selectedBrandId).then(data => setCarModels(data));
@@ -114,15 +122,18 @@ function AddItems() {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    setFormData((prevState) => ({
-                        ...prevState,
-                        image: data.url,
-                    }));
-                    setImageUrl(data.url);
+                    if (data.status === 'failed'){
+                            openNotificationWithIcon('error');
+                    }else {
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            image: data.url,
+                        }));
+                        setImageUrl(data.url);
+                    }
                 })
                 .catch((error) => {
                     console.error('Error uploading image:', error);
-                    // Handle the error
                 });
         }
     };
@@ -192,9 +203,11 @@ function AddItems() {
 
     return (
         <>
+            {contextHolder}
             <NavbarMenu/>
             <Header/>
             <Container>
+
                 <Row>
                     <h1 className={classes.Title}>Place your Advertisement </h1>
                 </Row>

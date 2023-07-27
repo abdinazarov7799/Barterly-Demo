@@ -40,7 +40,7 @@ function Header() {
                                 <p style={{fontSize: "14px", margin: 0}}>Favorites</p>
                             </div>
                             <Badge onClick={show} count={count} style={{right: "35px", top: "-5px"}}>
-                        </Badge>
+                            </Badge>
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -76,7 +76,7 @@ function Header() {
                         </Col>
                         <Col lg={2} id="icons"
                              className="d-flex justify-content-between align-content-center d-sm-none d-lg-flex">
-                            <div>
+
                                 <div onClick={show} style={{
                                     display: "flex",
                                     flexDirection: "column",
@@ -86,9 +86,7 @@ function Header() {
                                     <HeartOutlined style={{fontSize: "25px", marginBottom: "5px"}}/>
                                     <p style={{fontSize: "14px", margin: 0}}>Favorites</p>
                                 </div>
-                                <Badge onClick={show} count={count} style={{right: "-33px", top: '-58px'}}>
-                                </Badge>
-                            </div>
+                            <Badge onClick={show} count={count} style={{right: "38px", top: '-8px'}}></Badge>
                             <div style={{
                                 display: "flex",
                                 flexDirection: "column",
