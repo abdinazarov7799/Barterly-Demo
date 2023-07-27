@@ -51,7 +51,7 @@ const GradualBarter = () => {
                         <li>Make the trade and repeat the process until you've traded up to your desired item.</li>
                     </ul>
                 </Paragraph>
-                    <Col xs={12} md={10}>
+                    <Col xs={12} md={10} lg={8}>
                         <Button type="primary" className={classes.Btn} size="large">Start Your Gradual Barter Journey Now</Button>
                     </Col>
             </div>

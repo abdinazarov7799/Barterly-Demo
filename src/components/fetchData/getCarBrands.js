@@ -1,6 +1,6 @@
 function getCarBrands() {
     return(
-        fetch('https://tes.mediasolutions.uz/api.php?action=car_brands')
+        fetch(process.env.REACT_APP_CAR_BRANDS_API)
             .then(response => response.json())
             .catch((err) => {
                 console.log(err)
