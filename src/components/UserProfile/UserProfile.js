@@ -20,7 +20,7 @@ function UserProfile(props) {
             setCostClass(classes.Green);
         }
         if (props.cost_type === 'straight') {
-            setCostType('Straight GradualBarterBanner')
+            setCostType('Straight barter')
             setCostClass(classes.Blue);
         }
     })

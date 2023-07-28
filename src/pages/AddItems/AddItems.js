@@ -14,6 +14,7 @@ import {Option} from "antd/es/mentions";
 import {useNavigate} from "react-router";
 import SocialMedia from '../../assets/icons/social-media.png';
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import resizeFile from "../../components/ImageResizer/ImageResizer";
 
 const initialFormData = {
     category_id: '',
@@ -48,7 +49,7 @@ const selectWant = [
     },
     {
         value: 'straight',
-        label: 'Straight GradualBarterBanner',
+        label: 'Straight Barter',
     }
 ];
 
@@ -91,16 +92,39 @@ function AddItems() {
         ));
     };
 
-    const beforeUpload = (file) => {
+    // const beforeUpload = (file) => {
+    //     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    //     if (!isJpgOrPng) {
+    //         message.error('You can only upload JPG/PNG file!');
+    //     }
+    //     const isLt6M = file.size / 1024 / 1024 < 6;
+    //     if (!isLt6M) {
+    //         message.error('Image must smaller than 6MB!');
+    //     }
+    //     return isJpgOrPng && isLt6M;
+    // };
+
+    const beforeUpload = async (file) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
+            return;
         }
-        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        const isLt2M = file.size / 1024 / 1024 < 10;
         if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
+            message.error('Image must smaller than 10MB!');
+            return;
         }
-        return isJpgOrPng && isLt2M;
+
+        // Resize the file using your separate function
+        const uri = await resizeFile(file);
+
+        // Convert the resized image data URI to Blob
+        const resizedImage = await fetch(uri).then(res => res.blob());
+
+        // The returned object must be a Blob object which can be uploaded
+        return new Blob([resizedImage], { type: 'image/jpeg' });
     };
 
     const handleChange = (info) => {
@@ -110,7 +134,6 @@ function AddItems() {
         }
         if (info.file.status === 'done') {
             setLoading(false);
-
 
             const formData = new FormData();
             formData.append('image', info.file.originFileObj);
@@ -176,11 +199,12 @@ function AddItems() {
         if (whatYouWant === 'straight'){
             setFormData((prevState) => ({
                     ...prevState,
-                    second_cost: null
+                    second_cost: 0
                 }
             ));
         }
         if (next){
+            console.log(formData);
             fetch(process.env.REACT_APP_FORM_POST_API, {
                 method: 'POST',
                 headers: {
@@ -207,7 +231,6 @@ function AddItems() {
             <NavbarMenu/>
             <Header/>
             <Container>
-
                 <Row>
                     <h1 className={classes.Title}>Place your Advertisement </h1>
                 </Row>
@@ -423,7 +446,7 @@ function AddItems() {
                                             </Form.Item>
                                             <Col md={6}>
                                                 <p className={classes.InputText}>
-                                                    Recommanded resolution is 1920x1080 with file size less than 2MB, keep visual
+                                                    Recommanded resolution is 1920x1080 with file size less than 10MB, keep visual
                                                     elements centered
                                                 </p>
                                             </Col>
