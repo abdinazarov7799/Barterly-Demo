@@ -403,7 +403,7 @@ function AddItems() {
                                                     listType="picture-card"
                                                     className="avatar-uploader w-50"
                                                     showUploadList={false}
-                                                    action="https://tes.mediasolutions.uz/api.php"
+                                                    action={process.env.REACT_APP_FORM_POST_API}
                                                     withCredentials={true}
                                                     beforeUpload={beforeUpload}
                                                     onChange={handleChange}
