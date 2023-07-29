@@ -9,7 +9,7 @@ import classes from "./Item.module.css";
 import UserProfile from "../../components/UserProfile/UserProfile";
 import {Button} from "antd";
 import getCategories from "../../components/fetch/getCategories";
-import {HeartOutlined, RetweetOutlined} from "@ant-design/icons";
+import {HeartFilled, HeartOutlined, RetweetOutlined} from "@ant-design/icons";
 import './item.css'
 import CustomSider from "../../components/Sider/Sider";
 import Loading from "../../components/Loading/Loading";
@@ -82,7 +82,11 @@ function Item() {
                                     <Row className="mt-2 mb-3">
                                         <Col xs={6} className="mb-2 mb-md-0">
                                             <Button type={"ghost"} className={classes.Buttons} onClick={() => {!isClicked ? increment() : decrement(); setIsClicked(!isClicked)}}>
-                                                <HeartOutlined/>Add to your favorites
+                                                {
+                                                    !isClicked ?
+                                                        (<HeartOutlined/>Add to your favorites) :
+                                                    (<HeartFilled style={{color: "#d90a0a"}}/>Remove to your favorites)
+                                                }
                                             </Button>
                                         </Col>
                                         <Col xs={6}>
