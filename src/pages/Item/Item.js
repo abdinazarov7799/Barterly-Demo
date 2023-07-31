@@ -82,9 +82,7 @@ function Item() {
                                     <Row className="mt-2 mb-3">
                                         <Col xs={6} className="mb-2 mb-md-0">
                                             <Button type={"ghost"} className={classes.Buttons} onClick={() => {!isClicked ? increment() : decrement(); setIsClicked(!isClicked)}}>
-                                                {!isClicked ? <span className="align-items-center"><HeartOutlined/>  Add to your favorites</span> :
-                                                    <span className="align-items-center"><HeartFilled style={{color: "#d90a0a"}}/>  <span>Add to your favorites</span></span>
-                                                }
+                                                {!isClicked ? <HeartOutlined/> : <HeartFilled style={{color: "#d90a0a"}}/>} Add to your favorites
                                             </Button>
                                         </Col>
                                         <Col xs={6}>
