@@ -8,6 +8,7 @@ import getCategories from "../../components/fetch/getCategories";
 import {Link} from "react-router-dom";
 import useFavoritesCount from "../../Store/useFavorites";
 import FavoritesDrawer from "../../components/FavoritesDrawer/FavoritesDrawer";
+import {isArray, isEmpty} from "lodash";
 
 
 function Header() {
@@ -54,9 +55,15 @@ function Header() {
                         <Col sm={4} md={3} lg={2} className="">
                             <Dropdown overlay={
                                 <Menu>
-                                    {categories.map(item => {
-                                        return (<Menu.Item key={item.id}>{item.category}</Menu.Item>)
-                                    })}
+                                    {
+                                        isEmpty(categories) && (
+                                            isArray(categories) && (
+                                                categories?.map(item => {
+                                                    return <Menu.Item key={item.id}>{item.category}</Menu.Item>
+                                                }
+                                            ))
+                                        )
+                                    }
                                 </Menu>
                             }>
                                 <button className="btn float-start" id="selectBtn">

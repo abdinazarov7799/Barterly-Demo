@@ -15,6 +15,7 @@ import {useNavigate} from "react-router";
 import SocialMedia from '../../assets/icons/social-media.png';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import resizeFile from "../../components/ImageResizer/ImageResizer";
+import {isArray, isEmpty} from "lodash";
 
 const initialFormData = {
     category_id: '',
@@ -265,10 +266,14 @@ function AddItems() {
                                                 ));
                                             }}
                                         >
-                                            {categories.length !== 0 ?
-                                                categories.map((el) => {
-                                                    return <Option value={el.id}>{el.category}</Option>
-                                                }) : null
+
+                                            {
+                                                isEmpty(categories) && (
+                                                    isArray(categories) && (
+                                                        categories.map((el) => {
+                                                            return <Option value={el.id}>{el.category}</Option>
+                                                        }))
+                                                )
                                             }
                                         </Select>
                                     </Form.Item>
@@ -318,10 +323,14 @@ function AddItems() {
                                                         }));
                                                     }}
                                                 >
-                                                    {itemYear.length !== 0 ?
-                                                        itemYear.map((el) => {
-                                                            return <Option value={el.value}>{el.label}</Option>
-                                                        }) : null
+                                                    {
+                                                        isEmpty(itemYear) && (
+                                                            isArray(itemYear) && (
+                                                                itemYear.map((el) => {
+                                                                    return <Option value={el.value}>{el.label}</Option>
+                                                                })
+                                                            )
+                                                        )
                                                     }
                                                 </Select>
                                             </Form.Item>
@@ -368,10 +377,14 @@ function AddItems() {
                                                         }));
                                                     }}
                                                 >
-                                                    {carBrands.length !== 0 ?
-                                                        carBrands.map((el) => {
-                                                            return <Option value={el.id}>{el.brand}</Option>
-                                                        }) : null
+                                                    {
+                                                        isEmpty(carBrands) && (
+                                                            isArray(carBrands) && (
+                                                                carBrands.map((el) => {
+                                                                    return <Option value={el.id}>{el.brand}</Option>
+                                                                })
+                                                            )
+                                                        )
                                                     }
                                                 </Select>
                                             </Form.Item>
@@ -397,10 +410,14 @@ function AddItems() {
                                                         }));
                                                     }}
                                                 >
-                                                    {carModels.length !== 0 ?
-                                                        carModels.map((el) => {
-                                                            return <Option value={el.id}>{el.model}</Option>
-                                                        }) : null
+                                                    {
+                                                        isEmpty(carModels) && (
+                                                            isArray(carModels) && (
+                                                                carModels.map((el) => {
+                                                                    return <Option value={el.id}>{el.model}</Option>
+                                                                })
+                                                            )
+                                                        )
                                                     }
                                                 </Select>
                                             </Form.Item>
@@ -571,10 +588,14 @@ function AddItems() {
                                                         }));
                                                     }}
                                                 >
-                                                    {selectWant.length !== 0 ?
-                                                        selectWant.map((el) => {
-                                                            return <Option value={el.value}>{el.label}</Option>
-                                                        }) : null
+                                                    {
+                                                        isEmpty(selectWant) && (
+                                                            isArray(selectWant) && (
+                                                                selectWant.map((el) => {
+                                                                    return <Option value={el.value}>{el.label}</Option>
+                                                                })
+                                                            )
+                                                        )
                                                     }
                                                 </Select>
                                             </Form.Item>
@@ -659,7 +680,13 @@ function AddItems() {
                                                     ));
                                                 }}
                                         >
-                                            {categories.map((el) => <Option value={el.id}>{el.category}</Option>)}
+                                            {
+                                                isEmpty(categories) && (
+                                                    isArray(categories) && (
+                                                        categories?.map((el) => <Option value={el.id}>{el.category}</Option>)
+                                                    )
+                                                )
+                                            }
                                         </Select>
                                     </Form.Item>
                                 </Col>

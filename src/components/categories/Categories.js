@@ -11,6 +11,7 @@ import clothes from "../../assets/images/categories/clothes.png";
 import animals from "../../assets/images/categories/animals.png";
 import {useEffect, useState} from "react";
 import getCategories from "../fetch/getCategories";
+import {isArray, isEmpty} from "lodash";
 
 const initialCategoryData = [
     {
@@ -69,11 +70,15 @@ function Categories() {
             <Container>
                 <Row className="mt-3">
                     {
-                        initialCategoryData.map((el) => (
-                                <Col className="my-2">
-                                    <Cart title={el.title} category_id={1}  img={el.img}/>
-                                </Col>
-                        ))
+                        isEmpty(initialCategoryData) && (
+                            isArray(initialCategoryData) && (
+                                initialCategoryData?.map((el) => (
+                                    <Col className="my-2">
+                                        <Cart title={el.title} category_id={1}  img={el.img}/>
+                                    </Col>
+                                ))
+                            )
+                        )
                     }
                 </Row>
             </Container>

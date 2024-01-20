@@ -14,6 +14,7 @@ import './item.css'
 import CustomSider from "../../components/Sider/Sider";
 import Loading from "../../components/Loading/Loading";
 import useFavoritesCount from "../../Store/useFavorites";
+import {isArray, isEmpty} from "lodash";
 
 
 function Item() {
@@ -63,11 +64,16 @@ function Item() {
                                         className={classes.Title}>{itemData.name}</h1></span>
                                     <div className={classes.Image} style={{backgroundImage: `url("${image}")`}}>
                                     <span className={classes.CategoryType}>
-                                    {categories.map((cat) => {
-                                        if (itemData.category_id === cat.id) {
-                                            return cat.category
-                                        }
-                                    })}
+                                    {
+                                        isEmpty(categories) && (
+                                            isArray(categories) && (
+                                                categories?.map((cat) => {
+                                                    if (itemData.category_id === cat.id) {
+                                                        return cat.category
+                                                    }
+                                                }))
+                                        )
+                                    }
                                    </span>
                                     </div>
                                     <div className='d-block d-md-none mt-3'>

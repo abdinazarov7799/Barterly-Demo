@@ -1,6 +1,7 @@
 import {Menu} from "antd";
 import React from "react";
 import {useState} from "react";
+import {isArray, isEmpty} from "lodash";
 
 
 function FilterItem() {
@@ -27,12 +28,18 @@ function FilterItem() {
             <Menu onClick={(e) => {
                 setCurrent(e.key);
             }} selectedKeys={[current]} mode="horizontal">
-                {items.map((item) => (
-                    <Menu.Item key={item.key}>
-                        <span className="me-2">{item.label}</span>
-                        <span id="menu-badge">{item.count}</span>
-                    </Menu.Item>
-                ))}
+                {
+                  isEmpty(items) && (
+                      isArray(items) && (
+                          items?.map((item) => (
+                              <Menu.Item key={item.key}>
+                                  <span className="me-2">{item.label}</span>
+                                  <span id="menu-badge">{item.count}</span>
+                              </Menu.Item>
+                          ))
+                      )
+                    )
+                }
             </Menu>
         </>
     );

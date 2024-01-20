@@ -11,6 +11,7 @@ import getCategories from "../../components/fetch/getCategories";
 import classes from "./CategoryPage.module.css";
 import FilterItem from "../../components/FilterItem/FilterItem";
 import SubMenu from "../../components/SubMenu/SubMenu";
+import {isArray, isEmpty} from "lodash";
 
 function CategoryPage() {
     let {category_id} = useParams();
@@ -30,10 +31,16 @@ function CategoryPage() {
             <Header />
                 <Container>
                     <h1 className={classes.Title}>
-                        Category : {categories.map((cat) => {
-                        if (category_id === cat.id) {
-                            return cat.category
-                        }})}
+                        Category : {
+                        isEmpty(categories) && (
+                            isArray(categories) && (
+                                categories.map((cat) => {
+                                    if (category_id === cat.id) {
+                                        return cat.category
+                                    }})
+                            )
+                        )
+                    }
                     </h1>
                     <p className="mt-3">
                         Welcome to our Car category page dedicated to barter deals! Here, you can explore a diverse selection of cars available for bartering. If you're interested in exchanging
@@ -48,28 +55,34 @@ function CategoryPage() {
                             <Col xs={12} md={9}>
                                 <Row className="flex-wrap py-md-2">
                                     {!loading ?
-                                        products.map((product) => (
-                                            <Col xs={6} sm={6} md={6} lg={4} className="px-md-1 px-xl-2">
-                                                <Link to={`/product/${product.id}`}>
-                                                    <Product
-                                                        category_id={product.category_id}
-                                                        key={product.id}
-                                                        category={categories.map((cat) => {
-                                                            if (product.category_id === cat.id){
-                                                                return  cat.category
-                                                            }
-                                                        })}
-                                                        img={product.image}
-                                                        cost={product.cost}
-                                                        name={product.name}
-                                                        year={product.year}
-                                                        milage={product.milage}
-                                                        cost_type={product.cost_type}
-                                                        second_cost={product.second_cost}
-                                                    />
-                                                </Link>
-                                            </Col>
-                                        )) : <Spin size={'large'} className="mt-5"/>
+                                        (
+                                            isEmpty(products) && (
+                                                isArray(products) && (
+                                                    products.map((product) => (
+                                                        <Col xs={6} sm={6} md={6} lg={4} className="px-md-1 px-xl-2">
+                                                            <Link to={`/product/${product.id}`}>
+                                                                <Product
+                                                                    category_id={product.category_id}
+                                                                    key={product.id}
+                                                                    category={categories.map((cat) => {
+                                                                        if (product.category_id === cat.id){
+                                                                            return  cat.category
+                                                                        }
+                                                                    })}
+                                                                    img={product.image}
+                                                                    cost={product.cost}
+                                                                    name={product.name}
+                                                                    year={product.year}
+                                                                    milage={product.milage}
+                                                                    cost_type={product.cost_type}
+                                                                    second_cost={product.second_cost}
+                                                                />
+                                                            </Link>
+                                                        </Col>
+                                                    ))
+                                                )
+                                            )
+                                        ) : <Spin size={'large'} className="mt-5"/>
                                     }
                                 </Row>
                             </Col>
