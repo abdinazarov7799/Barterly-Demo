@@ -268,7 +268,7 @@ function AddItems() {
                                         >
 
                                             {
-                                                isEmpty(categories) && (
+                                                !isEmpty(categories) && (
                                                     isArray(categories) && (
                                                         categories.map((el) => {
                                                             return <Option value={el.id}>{el.category}</Option>
@@ -324,7 +324,7 @@ function AddItems() {
                                                     }}
                                                 >
                                                     {
-                                                        isEmpty(itemYear) && (
+                                                        !isEmpty(itemYear) && (
                                                             isArray(itemYear) && (
                                                                 itemYear.map((el) => {
                                                                     return <Option value={el.value}>{el.label}</Option>
@@ -378,7 +378,7 @@ function AddItems() {
                                                     }}
                                                 >
                                                     {
-                                                        isEmpty(carBrands) && (
+                                                        !isEmpty(carBrands) && (
                                                             isArray(carBrands) && (
                                                                 carBrands.map((el) => {
                                                                     return <Option value={el.id}>{el.brand}</Option>
@@ -411,7 +411,7 @@ function AddItems() {
                                                     }}
                                                 >
                                                     {
-                                                        isEmpty(carModels) && (
+                                                        !isEmpty(carModels) && (
                                                             isArray(carModels) && (
                                                                 carModels.map((el) => {
                                                                     return <Option value={el.id}>{el.model}</Option>
@@ -589,7 +589,7 @@ function AddItems() {
                                                     }}
                                                 >
                                                     {
-                                                        isEmpty(selectWant) && (
+                                                        !isEmpty(selectWant) && (
                                                             isArray(selectWant) && (
                                                                 selectWant.map((el) => {
                                                                     return <Option value={el.value}>{el.label}</Option>
@@ -681,7 +681,7 @@ function AddItems() {
                                                 }}
                                         >
                                             {
-                                                isEmpty(categories) && (
+                                                !isEmpty(categories) && (
                                                     isArray(categories) && (
                                                         categories?.map((el) => <Option value={el.id}>{el.category}</Option>)
                                                     )

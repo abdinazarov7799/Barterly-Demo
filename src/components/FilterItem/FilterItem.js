@@ -29,7 +29,7 @@ function FilterItem() {
                 setCurrent(e.key);
             }} selectedKeys={[current]} mode="horizontal">
                 {
-                  isEmpty(items) && (
+                  !isEmpty(items) && (
                       isArray(items) && (
                           items?.map((item) => (
                               <Menu.Item key={item.key}>

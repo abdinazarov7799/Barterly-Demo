@@ -14,29 +14,32 @@ import './item.css'
 import CustomSider from "../../components/Sider/Sider";
 import Loading from "../../components/Loading/Loading";
 import useFavoritesCount from "../../Store/useFavorites";
-import {isArray, isEmpty} from "lodash";
+import {get, isArray, isEmpty} from "lodash";
+import mockData from "../../mockData";
 
 
 function Item() {
     let {id} = useParams();
     const { increment , decrement } = useFavoritesCount();
     const [isClicked, setIsClicked] = useState(false);
-    const [itemData, setItemData] = useState({});
-    const [categories, setCategories] = useState([]);
+    // const [itemData, setItemData] = useState({});
+    // const [categories, setCategories] = useState([]);
+    const itemData = get(mockData,'products',[])[id-1];
+    const categories = get(mockData,'categories',[]);
     const {image} = itemData;
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     // const { preferred_categories } = itemData;
     // let preferred_category = preferred_categories.split(',');
-    useEffect(() => {
-        const fetchData = async () => {
-            const item = await getItem(id);
-            const cats = await getCategories();
-            setItemData(item);
-            setCategories(cats);
-            setIsLoading(false);
-        };
-        fetchData();
-    }, [id]);
+    // useEffect(() => {
+        // const fetchData = async () => {
+            // const item = await getItem(id);
+            // const cats = await getCategories();
+            // setItemData(item);
+            // setCategories(cats);
+            // setIsLoading(false);
+        // };
+        // fetchData();
+    // }, [id]);
     // useEffect(() =>{
     //     preferred_categories.map((cat) => {
     //         categories.map((el) => {
@@ -65,7 +68,7 @@ function Item() {
                                     <div className={classes.Image} style={{backgroundImage: `url("${image}")`}}>
                                     <span className={classes.CategoryType}>
                                     {
-                                        isEmpty(categories) && (
+                                        !isEmpty(categories) && (
                                             isArray(categories) && (
                                                 categories?.map((cat) => {
                                                     if (itemData.category_id === cat.id) {

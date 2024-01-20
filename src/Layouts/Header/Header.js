@@ -8,15 +8,18 @@ import getCategories from "../../components/fetch/getCategories";
 import {Link} from "react-router-dom";
 import useFavoritesCount from "../../Store/useFavorites";
 import FavoritesDrawer from "../../components/FavoritesDrawer/FavoritesDrawer";
-import {isArray, isEmpty} from "lodash";
+import {get, isArray, isEmpty} from "lodash";
+import mockData from "../../mockData";
 
 
 function Header() {
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
+    const categories = get(mockData,'categories',[]);
+
     const {count , show} = useFavoritesCount();
-    useEffect(() => {
-        getCategories().then(data => setCategories(data));
-    }, []);
+    // useEffect(() => {
+    //     getCategories().then(data => setCategories(data));
+    // }, []);
     return (
         <>
             <section id="header">
@@ -56,7 +59,7 @@ function Header() {
                             <Dropdown overlay={
                                 <Menu>
                                     {
-                                        isEmpty(categories) && (
+                                        !isEmpty(categories) && (
                                             isArray(categories) && (
                                                 categories?.map(item => {
                                                     return <Menu.Item key={item.id}>{item.category}</Menu.Item>

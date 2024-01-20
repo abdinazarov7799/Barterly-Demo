@@ -8,21 +8,24 @@ import getItems from "../fetch/getItems";
 import {Link} from "react-router-dom";
 import FilterItem from "../FilterItem/FilterItem";
 import GradualBarter from "../GradualBarterBanner/GradualBarterBanner";
-import {isArray, isEmpty} from "lodash";
+import {get, isArray, isEmpty} from "lodash";
+import mockData from "../../mockData";
 
 
 
 function HeroMenu() {
-    const [loading, setLoading] = useState(true);
-    const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
-    useEffect(() => {
-        getItems().then(data => {
-            setProducts(data);
-            setLoading(false)
-        });
-        getCategories().then(data => setCategories(data));
-    }, []);
+    const [loading, setLoading] = useState(false);
+    // const [products, setProducts] = useState([]);
+    // const [categories, setCategories] = useState([]);
+    const products = get(mockData,'products',[]);
+    const categories = get(mockData,'categories',[]);
+    // useEffect(() => {
+        // getItems().then(data => {
+            // setProducts(data);
+            // setLoading(false)
+        // });
+        // getCategories().then(data => setCategories(data));
+    // }, []);
 
 
     return(
@@ -33,7 +36,7 @@ function HeroMenu() {
                 <section className="mt-4 mb-2">
                     <Row className="flex-wrap py-md-2">
                         {!loading ? (
-                            isEmpty(products) && (
+                            !isEmpty(products) && (
                                 isArray(products) && (
                                     products.map((product) => (
                                         <Col xs={6} sm={6} md={4} lg={3} className="px-md-1 px-xl-2">

@@ -70,7 +70,7 @@ function Categories() {
             <Container>
                 <Row className="mt-3">
                     {
-                        isEmpty(initialCategoryData) && (
+                        !isEmpty(initialCategoryData) && (
                             isArray(initialCategoryData) && (
                                 initialCategoryData?.map((el) => (
                                     <Col className="my-2">

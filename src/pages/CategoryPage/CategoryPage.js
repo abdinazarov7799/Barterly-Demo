@@ -32,7 +32,7 @@ function CategoryPage() {
                 <Container>
                     <h1 className={classes.Title}>
                         Category : {
-                        isEmpty(categories) && (
+                        !isEmpty(categories) && (
                             isArray(categories) && (
                                 categories.map((cat) => {
                                     if (category_id === cat.id) {
@@ -56,7 +56,7 @@ function CategoryPage() {
                                 <Row className="flex-wrap py-md-2">
                                     {!loading ?
                                         (
-                                            isEmpty(products) && (
+                                            !isEmpty(products) && (
                                                 isArray(products) && (
                                                     products.map((product) => (
                                                         <Col xs={6} sm={6} md={6} lg={4} className="px-md-1 px-xl-2">
